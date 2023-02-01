@@ -1,133 +1,34 @@
 version: "3.6"
 services:
   docker-autocompose:
-    cap_drop:
-      - "AUDIT_CONTROL"
-      - "BLOCK_SUSPEND"
-      - "DAC_READ_SEARCH"
-      - "IPC_LOCK"
-      - "IPC_OWNER"
-      - "LEASE"
-      - "LINUX_IMMUTABLE"
-      - "MAC_ADMIN"
-      - "MAC_OVERRIDE"
-      - "NET_ADMIN"
-      - "NET_BROADCAST"
-      - "SYSLOG"
-      - "SYS_ADMIN"
-      - "SYS_BOOT"
-      - "SYS_MODULE"
-      - "SYS_NICE"
-      - "SYS_PACCT"
-      - "SYS_PTRACE"
-      - "SYS_RAWIO"
-      - "SYS_RESOURCE"
-      - "SYS_TIME"
-      - "SYS_TTY_CONFIG"
-      - "WAKE_ALARM"
     command:
       - "sleep"
       - "infinity"
-    container_name: "docker-autocompose"
-    environment:
-      - "PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-      - "LANG=C.UTF-8"
-      - "PYTHON_VERSION=3.11.0"
-      - "PYTHON_PIP_VERSION=22.3"
-      - "PYTHON_SETUPTOOLS_VERSION=65.5.0"
-      - "PYTHON_GET_PIP_URL=https://github.com/pypa/get-pip/raw/6d265be7a6b5bc4e9c5c07646aee0bf0394be03d/public/get-pip.py"
-    hostname: "80856f9e98a0"
     image: "ghcr.io/red5d/docker-autocompose:latest"
-    ipc: "private"
-    labels:
-      org.opencontainers.image.created: "2022-11-15T05:02:29Z"
-      org.opencontainers.image.source: "https://github.com/Red5d/docker-autocompose"
-      org.opencontainers.image.title: "Red5d/docker-autocompose"
-      org.opencontainers.image.version: "latest"
-    logging:
-      driver: "db"
-      options: {}
-    mac_address: "02:42:ac:11:00:02"
-    network_mode: "bridge"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
-    working_dir: "/usr/src/app"
-
   ubuntu:
     command:
       - "tail"
       - "-f"
       - "/dev/null"
-    container_name: "ubuntu"
-    environment:
-      - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-    hostname: "ubuntu"
     image: "ubuntu:latest"
-    ipc: "private"
-    labels:
-      org.opencontainers.image.ref.name: "ubuntu"
-      org.opencontainers.image.version: "22.04"
-    logging:
-      driver: "db"
-      options: {}
-    network_mode: "bridge"
-    privileged: true
-    security_opt:
-      - "label=disable"
-    stdin_open: true
-    tty: true
     volumes:
       - "/volume1/data:/ds/data"
       - "/volume1/homes:/ds/homes"
       - "/volume1/docker/ubuntu/root:/root"
-      - "/volume1/logs:/logs"
+      - "/volume1/logs:/ds/logs"
       - "/volume1/paperless:/ds/paperless"
-  ubuntu-host:
-    command:
-      - "/bin/bash"
-    container_name: "ubuntu-host"
-    environment:
-      - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-    hostname: "ubuntu-host"
-    image: "ubuntu:latest"
-    ipc: "private"
-    labels:
-      org.opencontainers.image.ref.name: "ubuntu"
-      org.opencontainers.image.version: "22.04"
-    logging:
-      driver: "db"
-      options: {}
-    network_mode: "host"
-    stdin_open: true
-    tty: true
-    volumes:
-      - "/volume1/paperless:/ds/paperless"
-      - "/volume1/data:/ds/data"
-      - "/volume1/homes:/ds/homes"
-      - "/volume1/docker/ubuntu/root:/root"
-      - "/volume1/logs:/logs"
+    working_dir: "/ds"
   watchtower:
     command:
       - "--run-once"
-    container_name: "watchtower"
-    entrypoint:
-      - "/watchtower"
     environment:
-      - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
       - "TZ=Europe/Zurich"
       - "WATCHTOWER_CLEANUP=true"
       - "WATCHTOWER_INCLUDE_STOPPED=true"
     expose:
       - "8080/tcp"
-    hostname: "5e0939b7fe2d"
     image: "containrrr/watchtower"
-    ipc: "private"
-    labels:
-      com.centurylinklabs.watchtower: "true"
-    logging:
-      driver: "db"
-      options: {}
-    network_mode: "bridge"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
-    working_dir: "/"

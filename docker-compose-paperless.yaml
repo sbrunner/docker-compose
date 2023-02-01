@@ -1,54 +1,16 @@
 version: "3.6"
 services:
-
   paperless:
-    cap_drop:
-      - "AUDIT_CONTROL"
-      - "BLOCK_SUSPEND"
-      - "DAC_READ_SEARCH"
-      - "IPC_LOCK"
-      - "IPC_OWNER"
-      - "LEASE"
-      - "LINUX_IMMUTABLE"
-      - "MAC_ADMIN"
-      - "MAC_OVERRIDE"
-      - "NET_ADMIN"
-      - "NET_BROADCAST"
-      - "SYSLOG"
-      - "SYS_ADMIN"
-      - "SYS_BOOT"
-      - "SYS_MODULE"
-      - "SYS_NICE"
-      - "SYS_PACCT"
-      - "SYS_PTRACE"
-      - "SYS_RAWIO"
-      - "SYS_RESOURCE"
-      - "SYS_TIME"
-      - "SYS_TTY_CONFIG"
-      - "WAKE_ALARM"
-    command:
-      - "/usr/local/bin/paperless_cmd.sh"
-    container_name: "paperless"
-    entrypoint:
-      - "/sbin/docker-entrypoint.sh"
     environment:
-      - "PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-      - "LANG=C.UTF-8"
-      - "PYTHON_VERSION=3.9.6"
-      - "PYTHON_PIP_VERSION=21.2.4"
-      - "PYTHON_SETUPTOOLS_VERSION=58.1.0"
-      - "PYTHON_GET_PIP_URL=https://github.com/pypa/get-pip/raw/c20b0cfd643cd4a19246ccf204e2997af70f6b21/public/get-pip.py"
       - "PAPERLESS_WORKER_TIMEOUT=3600"
       - "PAPERLESS_URL=http://100.88.77.85:8001"
       - "PAPERLESS_CSRF_TRUSTED_ORIGINS=http://100.88.77.85:8001"
       - "PAPERLESS_CORS_ALLOWED_HOSTS =http://100.88.77.85:8001"
       - "PAPERLESS_ALLOWED_HOSTS=100.88.77.85"
       - "PAPERLESS_DEBUG_=True"
-      - "PAPERLESS_IGNORE_DATES=17-03-1977,03-11-1977,24-12-2015,04-03-2017"
+      - "PAPERLESS_IGNORE_DATES=17-03-1977,17-03-2017,03-11-1977,24-12-2015,04-03-2017"
       - "PAPERLESS_AUTO_LOGIN_USERNAME=admin"
       - "PAPERLESS_FILENAME_FORMAT={correspondent}/{document_type}/{created_year}/{title}-{created}"
-      - "PAPERLESS_THREADS_PER_WORKER_=3"
-      - "PAPERLESS_TASK_WORKERS_=1"
       - "PAPERLESS_FORGIVING_OCR=true"
       - "PAPERLESS_INLINE_DOC=true"
       - "PAPERLESS_LIST_PER_PAGE=100"
@@ -67,115 +29,40 @@ services:
       - "PAPERLESS_EXPORT_DIR=/export"
       - "PAPERLESS_TIME_ZONE=Europe/Zurich"
       - "TZ=Europe/Zurich"
-    hostname: "paperless"
     image: "paperlessngx/paperless-ngx:latest"
-    ipc: "private"
-    labels:
-      org.opencontainers.image.authors: "paperless-ngx team <hello@paperless-ngx.com>"
-      org.opencontainers.image.created: "2023-01-29T16:57:53.460Z"
-      org.opencontainers.image.description: "A community-supported supercharged version\
-        \ of paperless: scan, index and archive all your physical documents"
-      org.opencontainers.image.documentation: "https://docs.paperless-ngx.com/"
-      org.opencontainers.image.licenses: "GPL-3.0"
-      org.opencontainers.image.revision: "0a47fba9ae1c624d05d6352cd045db41dfec6735"
-      org.opencontainers.image.source: "https://github.com/paperless-ngx/paperless-ngx"
-      org.opencontainers.image.title: "paperless-ngx"
-      org.opencontainers.image.url: "https://github.com/paperless-ngx/paperless-ngx"
-      org.opencontainers.image.version: "1.12.2"
-    links:
-      - "/postgres:/paperless/postgres"
-      - "/redis:/paperless/redis"
-    logging:
-      driver: "db"
-      options: {}
-    mac_address: "02:42:ac:11:00:07"
-    network_mode: "bridge"
     ports:
       - "8001:8000/tcp"
-    restart: "always"
-    stdin_open: true
-    tty: true
+    restart: unless-stopped
     volumes:
       - "/volume1/paperless/media:/usr/src/paperless/media2"
       - "/volume1/paperless/consume:/consume"
-      - "2c3b83a9c204ecf17eb8ff868ed61075592204ac04d62f74b54c65bac5df319c:/usr/src/paperless/consume"
-      - "c1caf82a3bf33289f35ebd41351407a3b5459f0b917ba1f8adebc9ce785208fc:/usr/src/paperless/data"
-      - "aa688fac316c6723abcf3dd3e529941b5142f55236c818f0c8b895d80c7a5505:/usr/src/paperless/export"
+      - "/volume1/docker/paperless/consume:/usr/src/paperless/consume"
+      - "/volume1/docker/paperless/data:/usr/src/paperless/data"
+      - "/volume1/docker/paperless/src_export:/usr/src/paperless/export"
       - "/volume1/docker/paperless/dumpdata:/dumpdata"
       - "/volume1/docker/paperless/export:/export"
       - "/volume1/docker/paperless/media:/usr/src/paperless/media"
-    working_dir: "/usr/src/paperless/src"
-
   sbrunner-scan-to-paperless:
-    command:
-      - "scan-process"
-    container_name: "sbrunner-scan-to-paperless"
-    environment:
-      - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-      - "VERSION=1.23.0+801"
-    hostname: "sbrunner-scan-to-paperless"
     image: "sbrunner/scan-to-paperless:test"
-    ipc: "private"
-    logging:
-      driver: "db"
-      options: {}
-    mac_address: "02:42:ac:11:00:0d"
-    network_mode: "bridge"
-    restart: "always"
-    stdin_open: true
-    tty: true
+    restart: unless-stopped
     volumes:
       - "/volume1/paperless/scan-codes:/scan-codes"
       - "/volume1/paperless/scan:/source"
       - "/volume1/paperless/consume:/destination"
-    working_dir: "/opt"
   sbrunner-scan-to-paperless-master:
-    command:
-      - "scan-process"
-    container_name: "sbrunner-scan-to-paperless-master"
-    environment:
-      - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-      - "LANG=C.UTF-8"
-      - "VERSION=1.24.0+1110"
-    hostname: "sbrunner-scan-to-paperless"
     image: "sbrunner/scan-to-paperless:master"
-    ipc: "shareable"
-    logging:
-      driver: "db"
-      options: {}
-    mac_address: "02:42:ac:11:00:10"
-    network_mode: "bridge"
-    restart: "always"
-    stdin_open: true
-    tty: true
+    restart: unless-stopped
     volumes:
-      - "/volume1/paperless/scan-master:/source"
+      - "/volume1/paperless/master/scan:/source"
       - "/volume1/paperless/consume:/destination"
-      - "c18bc9df60c7afb09ed1542fe3eabfa9b0c04288156ac087b42f87ee26b410e5:/scan-codes"
-    working_dir: "/opt"
+      - "/volume1/paperless/master/scan-codes:/scan-codes"
   sbrunner-scan-to-paperless-test:
-    command:
-      - "scan-process"
-    container_name: "sbrunner-scan-to-paperless-test"
     environment:
-      - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-      - "VERSION=1.23.0+801"
-      - "SCAN_CODES_MARGIN_LEFT_=10"
       - "PROGRESS=TRUE"
       - "EXPERIMENTAL=TRUE"
-    hostname: "sbrunner-scan-to-paperless-test"
     image: "sbrunner/scan-to-paperless:test"
-    ipc: "private"
-    logging:
-      driver: "db"
-      options: {}
-    mac_address: "02:42:ac:11:00:0c"
-    network_mode: "bridge"
-    restart: "always"
-    stdin_open: true
-    tty: true
+    restart: unless-stopped
     volumes:
       - "/volume1/paperless/test/scan:/source"
       - "/volume1/paperless/test/consume:/destination"
       - "/volume1/paperless/test/scan-codes:/scan-codes"
-    working_dir: "/opt"

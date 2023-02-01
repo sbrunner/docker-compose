@@ -1,29 +1,8 @@
 version: "3.6"
 services:
-
   redis:
-    command:
-      - "redis-server"
-    container_name: "redis"
-    entrypoint:
-      - "docker-entrypoint.sh"
-    environment:
-      - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-      - "GOSU_VERSION=1.14"
-      - "REDIS_VERSION=6.2.10"
-      - "REDIS_DOWNLOAD_URL=http://download.redis.io/releases/redis-6.2.10.tar.gz"
-    hostname: "redis"
     image: "redis:6"
-    ipc: "shareable"
-    logging:
-      driver: "db"
-      options: {}
-    mac_address: "02:42:ac:11:00:05"
-    network_mode: "bridge"
     ports:
       - ":6379/tcp"
-    stdin_open: true
-    tty: true
     volumes:
-      - "7202ac532536e9ee6d832360423964d64fe306b26d8d93641a115ea470a6dc1d:/data"
-    working_dir: "/data"
+      - "/volume1/docker/redis/data:/data"

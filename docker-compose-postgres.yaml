@@ -7,32 +7,13 @@ services:
       - "shared_buffers=256MB"
       - "-c"
       - "work_mem=16MB"
-    container_name: "postgres"
-    entrypoint:
-      - "docker-entrypoint.sh"
     environment:
-      - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/lib/postgresql/12/bin"
-      - "GOSU_VERSION=1.14"
-      - "LANG=en_US.utf8"
-      - "PG_MAJOR=12"
-      - "PG_VERSION=12.3-1.pgdg100+1"
-      - "PGDATA=/var/lib/postgresql/data"
-      - "POSTGRES_HOST_AUTH_METHOD=md5"
       - "POSTGRES_DB=paperless"
       - "POSTGRES_USER=paperless"
       - "POSTGRES_PASSWORD=1234"
-    hostname: "postgres"
     image: "postgres:12"
-    ipc: "shareable"
-    logging:
-      driver: "db"
-      options: {}
-    mac_address: "02:42:ac:11:00:03"
-    network_mode: "bridge"
     ports:
       - ":5432/tcp"
-    restart: "always"
-    stdin_open: true
-    tty: true
+    restart: unless-stopped
     volumes:
       - "/volume1/Backup/Paperless/pgdata:/var/lib/postgresql/data"
