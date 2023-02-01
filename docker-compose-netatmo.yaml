@@ -1,0 +1,124 @@
+version: "3.6"
+services:
+  graphite:
+    container_name: "graphite"
+    entrypoint:
+      - "/entrypoint"
+    environment:
+      - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      - "STATSD_INTERFACE=udp"
+    hostname: "graphite"
+    image: "sitespeedio/graphite:latest"
+    ipc: "private"
+    labels:
+      maintainer: "Denys Zhdanov <denis.zhdanov@gmail.com>"
+    logging:
+      driver: "db"
+      options: {}
+    mac_address: "02:42:ac:11:00:09"
+    network_mode: "bridge"
+    ports:
+      - "2003:2003/tcp"
+      - "2002:80/tcp"
+    restart: "always"
+    stdin_open: true
+    tty: true
+    volumes:
+      - "/volume1/docker/graphite/data:/opt/graphite/storage"
+      - "/volume1/docker/graphite/custom_functions:/opt/graphite/webapp/graphite/functions/custom"
+      - "afbdb801e4be3ad32e195ae65387069cf5ffcbec83724329cddac10225b60791:/opt/statsd/config"
+      - "bfd51d939354b58db86cc6e7837e6f35315827930d96bec4d183c7d6e1ff20cd:/var/lib/redis"
+      - "5f9be823f7b0e72190a857dda8bce9be632663dfd2399c809513442dd0e13f3f:/var/log"
+      - "12f0fcf2adf8fa9cd2a8d4151dcfb17c7dd62dd0c2eab9fae62e6ab5eb71bc07:/etc/logrotate.d"
+      - "d46564edbeb0861d4cb1bacfb015cb0514419cc39813a24c7894709dab9b4975:/etc/nginx"
+      - "/volume1/docker/graphite/config:/opt/graphite/conf"
+  netatmo-exporter:
+    cap_drop:
+      - "AUDIT_CONTROL"
+      - "BLOCK_SUSPEND"
+      - "DAC_READ_SEARCH"
+      - "IPC_LOCK"
+      - "IPC_OWNER"
+      - "LEASE"
+      - "LINUX_IMMUTABLE"
+      - "MAC_ADMIN"
+      - "MAC_OVERRIDE"
+      - "NET_ADMIN"
+      - "NET_BROADCAST"
+      - "SYSLOG"
+      - "SYS_ADMIN"
+      - "SYS_BOOT"
+      - "SYS_MODULE"
+      - "SYS_NICE"
+      - "SYS_PACCT"
+      - "SYS_PTRACE"
+      - "SYS_RAWIO"
+      - "SYS_RESOURCE"
+      - "SYS_TIME"
+      - "SYS_TTY_CONFIG"
+      - "WAKE_ALARM"
+    container_name: "netatmo-exporter"
+    entrypoint:
+      - "/bin/netatmo-exporter"
+    environment:
+      - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      - "NETATMO_EXPORTER_ADDR=netatmo-exporter:9210"
+      - "NETATMO_CLIENT_PASSWORD"
+      - "NETATMO_CLIENT_USERNAME"
+      - "NETATMO_CLIENT_SECRET"
+      - "NETATMO_CLIENT_ID"
+    hostname: "netatmo-exporter"
+    image: "xperimental/netatmo-exporter:latest"
+    ipc: "private"
+    labels:
+      maintainer: "Robert Jacob <xperimental@solidproject.de>"
+      org.opencontainers.image.created: "2023-01-08T16:15:52.054Z"
+      org.opencontainers.image.description: "Prometheus exporter for Netatmo sensor\
+        \ data."
+      org.opencontainers.image.licenses: "MIT"
+      org.opencontainers.image.revision: "3cd2ec2416954594ee011dfd73e6465530e01676"
+      org.opencontainers.image.source: "https://github.com/xperimental/netatmo-exporter"
+      org.opencontainers.image.title: "netatmo-exporter"
+      org.opencontainers.image.url: "https://github.com/xperimental/netatmo-exporter"
+      org.opencontainers.image.version: "1.5.1"
+    logging:
+      driver: "db"
+      options: {}
+    mac_address: "02:42:ac:11:00:06"
+    network_mode: "bridge"
+    ports:
+      - "9210:9210/tcp"
+    restart: "always"
+    stdin_open: true
+    tty: true
+    user: "nobody"
+  netatmo2graphite:
+    command:
+      - "netatmo2graphite"
+    container_name: "netatmo2graphite"
+    environment:
+      - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      - "LOGLEVEL=DEBUG"
+      - "GRAPHITE_HOST=192.168.0.20"
+      - "NETATMO_CLIENT_PASSWORD"
+      - "NETATMO_CLIENT_USERNAME"
+      - "NETATMO_CLIENT_SECRET"
+      - "NETATMO_CLIENT_ID"
+      - "DAEMON_DELAY_SECONDS=300"
+      - "DAEMON_DEFAULT_TIMESTAMP=1635368400"
+      - "DAEMON_PROCESS_ADD_ON_IGNORE_SECOUNDS=86400"
+      - "DAEMON_PROCESS_MAX_MISSING_SECOUNDS=1000000"
+    hostname: "netatmo2graphite"
+    image: "sbrunner/netatmo2graphite:latest"
+    ipc: "private"
+    logging:
+      driver: "db"
+      options: {}
+    mac_address: "02:42:ac:11:00:0e"
+    network_mode: "bridge"
+    restart: "always"
+    stdin_open: true
+    tty: true
+    volumes:
+      - "/volume1/docker/netatmo2graphite/config:/etc/netatmo2graphite"
+    working_dir: "/app"

@@ -1,0 +1,365 @@
+version: "3.6"
+services:
+  alertmanager:
+    cap_drop:
+      - "AUDIT_CONTROL"
+      - "BLOCK_SUSPEND"
+      - "DAC_READ_SEARCH"
+      - "IPC_LOCK"
+      - "IPC_OWNER"
+      - "LEASE"
+      - "LINUX_IMMUTABLE"
+      - "MAC_ADMIN"
+      - "MAC_OVERRIDE"
+      - "NET_ADMIN"
+      - "NET_BROADCAST"
+      - "SYSLOG"
+      - "SYS_ADMIN"
+      - "SYS_BOOT"
+      - "SYS_MODULE"
+      - "SYS_NICE"
+      - "SYS_PACCT"
+      - "SYS_PTRACE"
+      - "SYS_RAWIO"
+      - "SYS_RESOURCE"
+      - "SYS_TIME"
+      - "SYS_TTY_CONFIG"
+      - "WAKE_ALARM"
+    command:
+      - "--config.file=/etc/alertmanager/alertmanager.yml"
+      - "--storage.path=/alertmanager"
+    container_name: "alertmanager"
+    entrypoint:
+      - "/bin/alertmanager"
+    environment:
+      - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+    hostname: "alertmanager"
+    image: "prom/alertmanager:latest"
+    ipc: "private"
+    labels:
+      maintainer: "The Prometheus Authors <prometheus-developers@googlegroups.com>"
+    logging:
+      driver: "db"
+      options: {}
+    mac_address: "02:42:ac:11:00:14"
+    network_mode: "bridge"
+    ports:
+      - "9093:9093/tcp"
+    restart: "unless-stopped"
+    stdin_open: true
+    tty: true
+    user: "nobody"
+    volumes:
+      - "/volume1/docker/alertmanager/data:/alertmanager"
+      - "/volume1/docker/alertmanager/config:/etc/alertmanager"
+    working_dir: "/alertmanager"
+
+  container-exporter:
+    container_name: "container-exporter"
+    entrypoint:
+      - "/bin/container-exporter"
+    environment:
+      - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      - "GOPATH=/go"
+      - "APPPATH=/go/src/github.com/docker-infra/container-exporter"
+    hostname: "nas"
+    image: "prom/container-exporter"
+    ipc: "private"
+    logging:
+      driver: "db"
+      options: {}
+    mac_address: "02:42:ac:11:00:0b"
+    network_mode: "bridge"
+    ports:
+      - "9104:9104/tcp"
+    volumes:
+      - "/sys/fs/cgroup:/cgroup"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+
+  grafana:
+    cap_drop:
+      - "AUDIT_CONTROL"
+      - "BLOCK_SUSPEND"
+      - "DAC_READ_SEARCH"
+      - "IPC_LOCK"
+      - "IPC_OWNER"
+      - "LEASE"
+      - "LINUX_IMMUTABLE"
+      - "MAC_ADMIN"
+      - "MAC_OVERRIDE"
+      - "NET_ADMIN"
+      - "NET_BROADCAST"
+      - "SYSLOG"
+      - "SYS_ADMIN"
+      - "SYS_BOOT"
+      - "SYS_MODULE"
+      - "SYS_NICE"
+      - "SYS_PACCT"
+      - "SYS_PTRACE"
+      - "SYS_RAWIO"
+      - "SYS_RESOURCE"
+      - "SYS_TIME"
+      - "SYS_TTY_CONFIG"
+      - "WAKE_ALARM"
+    container_name: "grafana"
+    entrypoint:
+      - "/run.sh"
+    environment:
+      - "PATH=/usr/share/grafana/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      - "GF_PATHS_CONFIG=/etc/grafana/grafana.ini"
+      - "GF_PATHS_DATA=/var/lib/grafana"
+      - "GF_PATHS_HOME=/usr/share/grafana"
+      - "GF_PATHS_LOGS=/var/log/grafana"
+      - "GF_PATHS_PLUGINS=/var/lib/grafana/plugins"
+      - "GF_PATHS_PROVISIONING=/etc/grafana/provisioning"
+      - "GF_USERS_ALLOW_SIGN_UP=false"
+      - "GF_SECURITY_ADMIN_PASSWORD=sbr1663"
+      - "GF_SECURITY_ADMIN_USER=admin"
+    hostname: "grafana"
+    image: "grafana/grafana:latest"
+    ipc: "private"
+    logging:
+      driver: "db"
+      options: {}
+    network_mode: "host"
+    ports:
+      - "3000:3000/tcp"
+    restart: "always"
+    stdin_open: true
+    tty: true
+    user: "472"
+    volumes:
+      - "/volume1/docker/grafana/datasources:/etc/grafana/provisioning/datasources"
+      - "/volume1/docker/grafana/data:/var/lib/grafana"
+      - "/volume1/docker/grafana/dashboards:/etc/grafana/provisioning/dashboards"
+    working_dir: "/usr/share/grafana"
+
+  loki:
+    cap_drop:
+      - "AUDIT_CONTROL"
+      - "BLOCK_SUSPEND"
+      - "DAC_READ_SEARCH"
+      - "IPC_LOCK"
+      - "IPC_OWNER"
+      - "LEASE"
+      - "LINUX_IMMUTABLE"
+      - "MAC_ADMIN"
+      - "MAC_OVERRIDE"
+      - "NET_ADMIN"
+      - "NET_BROADCAST"
+      - "SYSLOG"
+      - "SYS_ADMIN"
+      - "SYS_BOOT"
+      - "SYS_MODULE"
+      - "SYS_NICE"
+      - "SYS_PACCT"
+      - "SYS_PTRACE"
+      - "SYS_RAWIO"
+      - "SYS_RESOURCE"
+      - "SYS_TIME"
+      - "SYS_TTY_CONFIG"
+      - "WAKE_ALARM"
+    command:
+      - "-config.file=/etc/loki/config.yaml"
+    container_name: "loki"
+    entrypoint:
+      - "/usr/bin/loki"
+    environment:
+      - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+    hostname: "loki"
+    image: "grafana/loki:latest"
+    ipc: "private"
+    labels:
+      org.opencontainers.image.created: "2021-04-06T00:51:32Z"
+      org.opencontainers.image.revision: "babea82ef558c4b4dc685fd4ca677de1f0a7ee8f"
+      org.opencontainers.image.source: "https://github.com/grafana/loki.git"
+      org.opencontainers.image.url: "https://github.com/grafana/loki"
+    logging:
+      driver: "db"
+      options: {}
+    mac_address: "02:42:ac:11:00:0a"
+    network_mode: "bridge"
+    ports:
+      - "3100:3100/tcp"
+    stdin_open: true
+    tty: true
+    user: "loki"
+    volumes:
+      - "/volume1/docker/loki/wal:/wal"
+      - "/volume1/docker/loki/config:/etc/loki:ro"
+      - "/volume1/docker/loki/data:/loki/chunks"
+
+  node-exporter:
+    command:
+      - "--path.procfs=/host/proc"
+      - "--path.sysfs=/host/sys"
+      - "--collector.filesystem.ignored-mount-points"
+      - "^/(rootfs/)?(dev|etc|host|proc|run|sys|volume1)($$|/)"
+    container_name: "node-exporter"
+    entrypoint:
+      - "/bin/node_exporter"
+    environment:
+      - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+    hostname: "nas"
+    image: "prom/node-exporter:latest"
+    ipc: "private"
+    labels:
+      maintainer: "The Prometheus Authors <prometheus-developers@googlegroups.com>"
+    logging:
+      driver: "db"
+      options: {}
+    mac_address: "02:42:ac:11:00:08"
+    network_mode: "bridge"
+    ports:
+      - "9100:9100/tcp"
+    restart: "unless-stopped"
+    security_opt:
+      - "label=disable"
+    user: "nobody"
+    volumes:
+      - "/proc:/host/proc:ro"
+      - "/sys:/host/sys:ro"
+      - "/:/rootfs:ro"
+
+  process-exporter:
+    command:
+      - "--procfs"
+      - "/host/proc"
+      - "-config.path"
+      - "/config/config.yaml"
+    container_name: "process-exporter"
+    entrypoint:
+      - "/bin/process-exporter"
+    environment:
+      - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+    hostname: "edd331b7fcea"
+    image: "ncabatoff/process-exporter:latest"
+    ipc: "private"
+    labels:
+      org.opencontainers.image.created: "2021-11-17T13:18:41.943Z"
+      org.opencontainers.image.description: "Prometheus exporter that mines /proc\
+        \ to report on selected processes"
+      org.opencontainers.image.licenses: "MIT"
+      org.opencontainers.image.revision: "935906b20e56b70afc22443137fa0337f7fa5d05"
+      org.opencontainers.image.source: "https://github.com/ncabatoff/process-exporter"
+      org.opencontainers.image.title: "process-exporter"
+      org.opencontainers.image.url: "https://github.com/ncabatoff/process-exporter"
+      org.opencontainers.image.version: "0.7.10"
+    logging:
+      driver: "db"
+      options: {}
+    mac_address: "02:42:ac:11:00:0f"
+    network_mode: "bridge"
+    ports:
+      - "9256:9256/tcp"
+    security_opt:
+      - "label=disable"
+    volumes:
+      - "/volume1/docker/process-exporter/config:/config"
+      - "/proc:/host/proc"
+    working_dir: "/"
+  prometheus:
+    cap_drop:
+      - "AUDIT_CONTROL"
+      - "BLOCK_SUSPEND"
+      - "DAC_READ_SEARCH"
+      - "IPC_LOCK"
+      - "IPC_OWNER"
+      - "LEASE"
+      - "LINUX_IMMUTABLE"
+      - "MAC_ADMIN"
+      - "MAC_OVERRIDE"
+      - "NET_ADMIN"
+      - "NET_BROADCAST"
+      - "SYSLOG"
+      - "SYS_ADMIN"
+      - "SYS_BOOT"
+      - "SYS_MODULE"
+      - "SYS_NICE"
+      - "SYS_PACCT"
+      - "SYS_PTRACE"
+      - "SYS_RAWIO"
+      - "SYS_RESOURCE"
+      - "SYS_TIME"
+      - "SYS_TTY_CONFIG"
+      - "WAKE_ALARM"
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.console.libraries=/usr/share/prometheus/console_libraries"
+      - "--web.console.templates=/usr/share/prometheus/consoles"
+    container_name: "prometheus"
+    entrypoint:
+      - "/bin/prometheus"
+    environment:
+      - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+    expose:
+      - "9090/tcp"
+    hostname: "prometheus"
+    image: "prom/prometheus:latest"
+    ipc: "private"
+    labels:
+      maintainer: "The Prometheus Authors <prometheus-developers@googlegroups.com>"
+    logging:
+      driver: "db"
+      options: {}
+    network_mode: "host"
+    stdin_open: true
+    tty: true
+    user: "nobody"
+    volumes:
+      - "/volume1/docker/prometheus/config:/etc/prometheus"
+      - "/volume1/docker/prometheus/data:/prometheus"
+    working_dir: "/prometheus"
+    
+  promtail:
+    command:
+      - "-config.file=/etc/promtail/config.yaml"
+    container_name: "promtail"
+    entrypoint:
+      - "/usr/bin/promtail"
+    environment:
+      - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+    hostname: "fbc7ede51ede"
+    image: "grafana/promtail"
+    ipc: "private"
+    labels:
+      org.opencontainers.image.created: "2023-01-26T14:10:33Z"
+      org.opencontainers.image.revision: "c35554d0956dd1a313277c5d56e49de7c6936161"
+      org.opencontainers.image.source: "https://github.com/grafana/loki.git"
+      org.opencontainers.image.url: "https://github.com/grafana/loki"
+    logging:
+      driver: "db"
+      options: {}
+    mac_address: "02:42:ac:11:00:13"
+    network_mode: "bridge"
+    volumes:
+      - "/volume1/docker/promtail/config:/etc/promtail"
+      - "/var/log:/var/log"
+      - "/volume1/logs/synoscheduler:/volume1/logs/synoscheduler"
+
+  snmp-exporter:
+    command:
+      - "--config.file=/etc/snmp_exporter/snmp.yml"
+    container_name: "snmp-exporter"
+    entrypoint:
+      - "/bin/snmp_exporter"
+    environment:
+      - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+    hostname: "snmp-exporter"
+    image: "prom/snmp-exporter:latest"
+    ipc: "private"
+    labels:
+      maintainer: "The Prometheus Authors <prometheus-developers@googlegroups.com>"
+    logging:
+      driver: "db"
+      options: {}
+    mac_address: "02:42:ac:11:00:12"
+    network_mode: "bridge"
+    ports:
+      - "116:116/udp"
+      - "9116:9116/tcp"
+    stdin_open: true
+    tty: true
+    volumes:
+      - "/volume1/docker/snmp-exporter/config:/etc/snmp_exporter"
