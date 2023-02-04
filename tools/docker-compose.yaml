@@ -4,8 +4,9 @@ services:
     container_name: "docker-autocompose"
     image: "ghcr.io/red5d/docker-autocompose:latest"
     command:
-      - "sleep"
-      - "infinity"
+      - "tail"
+      - "-f"
+      - "/dev/null"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
     restart: unless-stopped
@@ -30,8 +31,8 @@ services:
     command:
       - "--run-once"
     environment:
-      - "TZ=Europe/Zurich"
-      - "WATCHTOWER_CLEANUP=true"
-      - "WATCHTOWER_INCLUDE_STOPPED=true"
+      - "TZ"
+      - "WATCHTOWER_CLEANUP"
+      - "WATCHTOWER_INCLUDE_STOPPED"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
