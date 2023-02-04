@@ -14,7 +14,7 @@ services:
       - "/volume1/docker/graphite/redis:/var/lib/redis"
       - "/volume1/docker/graphite/log:/var/log"
       - "/volume1/docker/graphite/logrotate.d:/etc/logrotate.d"
-      - "/volume1/docker/graphite/nging:/etc/nginx"
+      - "/volume1/docker/graphite/nginx:/etc/nginx"
       - "/volume1/docker/graphite/config:/opt/graphite/conf"
   netatmo-exporter:
     environment:
