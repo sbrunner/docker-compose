@@ -56,12 +56,12 @@ services:
       - "/:/rootfs:ro"
   process-exporter:
     container_name: "process-exporter"
+    image: "ncabatoff/process-exporter:latest"
     command:
       - "--procfs"
       - "/host/proc"
       - "-config.path"
       - "/config/config.yaml"
-    image: "ncabatoff/process-exporter:latest"
     ports:
       - "9256:9256/tcp"
     volumes:
@@ -69,14 +69,15 @@ services:
       - "/proc:/host/proc"
   prometheus:
     container_name: "prometheus"
+    image: "prom/prometheus:latest"
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
       - "--storage.tsdb.path=/prometheus"
       - "--web.console.libraries=/usr/share/prometheus/console_libraries"
       - "--web.console.templates=/usr/share/prometheus/consoles"
+    network_mode: "host"
     expose:
       - "9090/tcp"
-    image: "prom/prometheus:latest"
     volumes:
       - "/volume1/docker/prometheus/config:/etc/prometheus"
       - "/volume1/docker/prometheus/data:/prometheus"
