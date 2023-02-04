@@ -1,6 +1,7 @@
 version: "3.6"
 services:
   alertmanager:
+    container_name: "alertmanager"
     image: "prom/alertmanager:latest"
     ports:
       - "9093:9093/tcp"
@@ -16,6 +17,7 @@ services:
       - "/sys/fs/cgroup:/cgroup"
       - "/var/run/docker.sock:/var/run/docker.sock"
   grafana:
+    container_name: "grafana"
     environment:
       - "GF_USERS_ALLOW_SIGN_UP=false"
       - "GF_SECURITY_ADMIN_PASSWORD=sbr1663"
@@ -24,11 +26,13 @@ services:
     ports:
       - "3000:3000/tcp"
     restart: unless-stopped
+    network_mode: "host"
     volumes:
       - "/volume1/docker/grafana/datasources:/etc/grafana/provisioning/datasources"
       - "/volume1/docker/grafana/data:/var/lib/grafana"
       - "/volume1/docker/grafana/dashboards:/etc/grafana/provisioning/dashboards"
   loki:
+    container_name: loki
     command:
       - "-config.file=/etc/loki/config.yaml"
     image: "grafana/loki:latest"
@@ -39,6 +43,7 @@ services:
       - "/volume1/docker/loki/config:/etc/loki:ro"
       - "/volume1/docker/loki/data:/loki/chunks"
   node-exporter:
+    container_name: "node-exporter"
     hostname: "nas"
     image: "prom/node-exporter:latest"
     ports:
@@ -49,6 +54,7 @@ services:
       - "/sys:/host/sys:ro"
       - "/:/rootfs:ro"
   process-exporter:
+    container_name: "process-exporter"
     command:
       - "--procfs"
       - "/host/proc"
@@ -61,6 +67,7 @@ services:
       - "/volume1/docker/process-exporter/config:/config"
       - "/proc:/host/proc"
   prometheus:
+    container_name: "prometheus"
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
       - "--storage.tsdb.path=/prometheus"
@@ -73,6 +80,7 @@ services:
       - "/volume1/docker/prometheus/config:/etc/prometheus"
       - "/volume1/docker/prometheus/data:/prometheus"
   promtail:
+    container_name: "promtail"
     command:
       - "-config.file=/etc/promtail/config.yaml"
     image: "grafana/promtail"
@@ -81,6 +89,7 @@ services:
       - "/var/log:/var/log"
       - "/volume1/logs/synoscheduler:/volume1/logs/synoscheduler"
   snmp-exporter:
+    container_name: "snmp-exporter"
     command:
       - "--config.file=/etc/snmp_exporter/snmp.yml"
     image: "prom/snmp-exporter:latest"

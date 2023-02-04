@@ -1,6 +1,7 @@
 version: "3.6"
 services:
   paperless:
+    container_name: paperless
     environment:
       - "PAPERLESS_WORKER_TIMEOUT=3600"
       - "PAPERLESS_URL=http://100.88.77.85:8001"
@@ -43,6 +44,7 @@ services:
       - "/volume1/docker/paperless/export:/export"
       - "/volume1/docker/paperless/media:/usr/src/paperless/media"
   sbrunner-scan-to-paperless:
+    container_name: sbrunner-scan-to-paperless
     image: "sbrunner/scan-to-paperless:test"
     restart: unless-stopped
     volumes:
@@ -50,6 +52,7 @@ services:
       - "/volume1/paperless/scan:/source"
       - "/volume1/paperless/consume:/destination"
   sbrunner-scan-to-paperless-master:
+    container_name: sbrunner-scan-to-paperless-master
     image: "sbrunner/scan-to-paperless:master"
     restart: unless-stopped
     volumes:
@@ -57,6 +60,7 @@ services:
       - "/volume1/paperless/consume:/destination"
       - "/volume1/paperless/master/scan-codes:/scan-codes"
   sbrunner-scan-to-paperless-test:
+    container_name: sbrunner-scan-to-paperless-test
     environment:
       - "PROGRESS=TRUE"
       - "EXPERIMENTAL=TRUE"

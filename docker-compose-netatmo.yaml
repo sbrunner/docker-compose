@@ -7,6 +7,7 @@ services:
       - "2003:2003/tcp"
       - "2002:80/tcp"
     restart: unless-stopped
+    network_mode: "host"
     volumes:
       - "/volume1/docker/graphite/data:/opt/graphite/storage"
       - "/volume1/docker/graphite/custom_functions:/opt/graphite/webapp/graphite/functions/custom"
@@ -41,4 +42,4 @@ services:
     image: "sbrunner/netatmo2graphite:latest"
     volumes:
       - "/volume1/docker/netatmo2graphite/config:/etc/netatmo2graphite"
-    working_dir: "/app"
+    restart: unless-stopped

@@ -1,6 +1,7 @@
 version: "3.6"
 services:
   docker-autocompose:
+    container_name: "docker-autocompose"
     command:
       - "sleep"
       - "infinity"
@@ -21,6 +22,7 @@ services:
       - "/volume1/paperless:/ds/paperless"
     working_dir: "/ds"
   watchtower:
+    container_name: "watchtower"
     command:
       - "--run-once"
     environment:
