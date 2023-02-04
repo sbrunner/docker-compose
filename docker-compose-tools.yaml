@@ -2,18 +2,20 @@ version: "3.6"
 services:
   docker-autocompose:
     container_name: "docker-autocompose"
+    image: "ghcr.io/red5d/docker-autocompose:latest"
     command:
       - "sleep"
       - "infinity"
-    image: "ghcr.io/red5d/docker-autocompose:latest"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
+    restart: unless-stopped
   ubuntu:
+    container_name: ubuntu
+    image: "ubuntu:latest"
     command:
       - "tail"
       - "-f"
       - "/dev/null"
-    image: "ubuntu:latest"
     volumes:
       - "/volume1/data:/ds/data"
       - "/volume1/homes:/ds/homes"
@@ -21,16 +23,15 @@ services:
       - "/volume1/logs:/ds/logs"
       - "/volume1/paperless:/ds/paperless"
     working_dir: "/ds"
+    restart: unless-stopped
   watchtower:
     container_name: "watchtower"
+    image: "containrrr/watchtower"
     command:
       - "--run-once"
     environment:
       - "TZ=Europe/Zurich"
       - "WATCHTOWER_CLEANUP=true"
       - "WATCHTOWER_INCLUDE_STOPPED=true"
-    expose:
-      - "8080/tcp"
-    image: "containrrr/watchtower"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"

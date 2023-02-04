@@ -1,9 +1,0 @@
-version: "3.6"
-services:
-  redis:
-    container_name: redis
-    image: "redis:6"
-    ports:
-      - ":6379/tcp"
-    volumes:
-      - "/volume1/docker/redis/data:/data"

@@ -2,6 +2,7 @@ version: "3.6"
 services:
   paperless:
     container_name: paperless
+    image: "paperlessngx/paperless-ngx:latest"
     environment:
       - "PAPERLESS_WORKER_TIMEOUT=3600"
       - "PAPERLESS_URL=http://100.88.77.85:8001"
@@ -30,10 +31,8 @@ services:
       - "PAPERLESS_EXPORT_DIR=/export"
       - "PAPERLESS_TIME_ZONE=Europe/Zurich"
       - "TZ=Europe/Zurich"
-    image: "paperlessngx/paperless-ngx:latest"
     ports:
       - "8001:8000/tcp"
-    restart: unless-stopped
     volumes:
       - "/volume1/paperless/media:/usr/src/paperless/media2"
       - "/volume1/paperless/consume:/consume"
@@ -43,30 +42,54 @@ services:
       - "/volume1/docker/paperless/dumpdata:/dumpdata"
       - "/volume1/docker/paperless/export:/export"
       - "/volume1/docker/paperless/media:/usr/src/paperless/media"
+    restart: unless-stopped
   sbrunner-scan-to-paperless:
     container_name: sbrunner-scan-to-paperless
     image: "sbrunner/scan-to-paperless:test"
-    restart: unless-stopped
     volumes:
       - "/volume1/paperless/scan-codes:/scan-codes"
       - "/volume1/paperless/scan:/source"
       - "/volume1/paperless/consume:/destination"
+    restart: unless-stopped
   sbrunner-scan-to-paperless-master:
     container_name: sbrunner-scan-to-paperless-master
     image: "sbrunner/scan-to-paperless:master"
-    restart: unless-stopped
     volumes:
       - "/volume1/paperless/master/scan:/source"
       - "/volume1/paperless/consume:/destination"
       - "/volume1/paperless/master/scan-codes:/scan-codes"
+    restart: unless-stopped
   sbrunner-scan-to-paperless-test:
     container_name: sbrunner-scan-to-paperless-test
+    image: "sbrunner/scan-to-paperless:test"
     environment:
       - "PROGRESS=TRUE"
       - "EXPERIMENTAL=TRUE"
-    image: "sbrunner/scan-to-paperless:test"
-    restart: unless-stopped
     volumes:
       - "/volume1/paperless/test/scan:/source"
       - "/volume1/paperless/test/consume:/destination"
       - "/volume1/paperless/test/scan-codes:/scan-codes"
+    restart: unless-stopped
+  postgres:
+    container_name: postgres
+    image: "postgres:12"
+    command:
+      - "postgres"
+      - "-c"
+      - "shared_buffers=256MB"
+      - "-c"
+      - "work_mem=16MB"
+    environment:
+      - "POSTGRES_DB=paperless"
+      - "POSTGRES_USER=paperless"
+      - "POSTGRES_PASSWORD=1234"
+    volumes:
+      - "/volume1/Backup/Paperless/pgdata:/var/lib/postgresql/data"
+    restart: unless-stopped
+  redis:
+    container_name: redis
+    image: "redis:6"
+    volumes:
+      - "/volume1/docker/redis/data:/data"
+    restart: unless-stopped
+

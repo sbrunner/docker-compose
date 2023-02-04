@@ -6,13 +6,13 @@ services:
     ports:
       - "2003:2003/tcp"
       - "2002:80/tcp"
-    restart: unless-stopped
     volumes:
       - "/volume1/docker/graphite/data:/opt/graphite/storage"
       - "/volume1/docker/graphite/custom_functions:/opt/graphite/webapp/graphite/functions/custom"
       - "/volume1/docker/graphite/statd:/opt/statsd/config"
       - "/volume1/docker/graphite/log:/var/log"
       - "/volume1/docker/graphite/config:/opt/graphite/conf"
+    restart: unless-stopped
   netatmo-exporter:
     container_name: "netatmo-exporter"
     environment:

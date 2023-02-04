@@ -5,10 +5,10 @@ services:
     image: "prom/alertmanager:latest"
     ports:
       - "9093:9093/tcp"
-    restart: unless-stopped
     volumes:
       - "/volume1/docker/alertmanager/data:/alertmanager"
       - "/volume1/docker/alertmanager/config:/etc/alertmanager"
+    restart: unless-stopped
   container-exporter:
     container_name: "container-exporter"
     image: "prom/container-exporter"
@@ -17,43 +17,45 @@ services:
     volumes:
       - "/sys/fs/cgroup:/cgroup"
       - "/var/run/docker.sock:/var/run/docker.sock"
+    restart: unless-stopped
   grafana:
     container_name: "grafana"
+    image: "grafana/grafana:latest"
     environment:
       - "GF_USERS_ALLOW_SIGN_UP=false"
       - "GF_SECURITY_ADMIN_PASSWORD=sbr1663"
       - "GF_SECURITY_ADMIN_USER=admin"
-    image: "grafana/grafana:latest"
     ports:
       - "3000:3000/tcp"
-    restart: unless-stopped
     network_mode: "host"
     volumes:
       - "/volume1/docker/grafana/datasources:/etc/grafana/provisioning/datasources"
       - "/volume1/docker/grafana/data:/var/lib/grafana"
       - "/volume1/docker/grafana/dashboards:/etc/grafana/provisioning/dashboards"
+    restart: unless-stopped
   loki:
     container_name: loki
+    image: "grafana/loki:latest"
     command:
       - "-config.file=/etc/loki/config.yaml"
-    image: "grafana/loki:latest"
     ports:
       - "3100:3100/tcp"
     volumes:
       - "/volume1/docker/loki/wal:/wal"
       - "/volume1/docker/loki/config:/etc/loki:ro"
       - "/volume1/docker/loki/data:/loki/chunks"
+    restart: unless-stopped
   node-exporter:
     container_name: "node-exporter"
-    hostname: "nas"
     image: "prom/node-exporter:latest"
+    hostname: "nas"
     ports:
       - "9100:9100/tcp"
-    restart: unless-stopped
     volumes:
       - "/proc:/host/proc:ro"
       - "/sys:/host/sys:ro"
       - "/:/rootfs:ro"
+    restart: unless-stopped
   process-exporter:
     container_name: "process-exporter"
     image: "ncabatoff/process-exporter:latest"
@@ -67,6 +69,7 @@ services:
     volumes:
       - "/volume1/docker/process-exporter/config:/config"
       - "/proc:/host/proc"
+    restart: unless-stopped
   prometheus:
     container_name: "prometheus"
     image: "prom/prometheus:latest"
@@ -80,22 +83,25 @@ services:
     volumes:
       - "/volume1/docker/prometheus/config:/etc/prometheus"
       - "/volume1/docker/prometheus/data:/prometheus"
+    restart: unless-stopped
   promtail:
     container_name: "promtail"
+    image: "grafana/promtail"
     command:
       - "-config.file=/etc/promtail/config.yaml"
-    image: "grafana/promtail"
     volumes:
       - "/volume1/docker/promtail/config:/etc/promtail"
       - "/var/log:/var/log"
       - "/volume1/logs/synoscheduler:/volume1/logs/synoscheduler"
+    restart: unless-stopped
   snmp-exporter:
     container_name: "snmp-exporter"
+    image: "prom/snmp-exporter:latest"
     command:
       - "--config.file=/etc/snmp_exporter/snmp.yml"
-    image: "prom/snmp-exporter:latest"
     ports:
       - "116:116/udp"
       - "9116:9116/tcp"
     volumes:
       - "/volume1/docker/snmp-exporter/config:/etc/snmp_exporter"
+    restart: unless-stopped
