@@ -10,6 +10,7 @@ services:
       - "/volume1/docker/alertmanager/data:/alertmanager"
       - "/volume1/docker/alertmanager/config:/etc/alertmanager"
   container-exporter:
+    container_name: "container-exporter"
     image: "prom/container-exporter"
     ports:
       - "9104:9104/tcp"
