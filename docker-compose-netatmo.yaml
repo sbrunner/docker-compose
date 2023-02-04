@@ -14,7 +14,6 @@ services:
       - "/volume1/docker/graphite/redis:/var/lib/redis"
       - "/volume1/docker/graphite/log:/var/log"
       - "/volume1/docker/graphite/logrotate.d:/etc/logrotate.d"
-      - "/volume1/docker/graphite/nginx:/etc/nginx"
       - "/volume1/docker/graphite/config:/opt/graphite/conf"
   netatmo-exporter:
     environment:
@@ -28,8 +27,7 @@ services:
       - "9210:9210/tcp"
     restart: unless-stopped
   netatmo2graphite:
-    command:
-      - "netatmo2graphite"
+    container_name: "netatmo2graphite"
     environment:
       #- "LOGLEVEL=DEBUG"
       - "GRAPHITE_HOST=192.168.0.20"
