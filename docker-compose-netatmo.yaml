@@ -16,6 +16,7 @@ services:
       - "/volume1/docker/graphite/logrotate.d:/etc/logrotate.d"
       - "/volume1/docker/graphite/config:/opt/graphite/conf"
   netatmo-exporter:
+    container_name: "netatmo-exporter"
     environment:
       - "NETATMO_EXPORTER_ADDR=netatmo-exporter:9210"
       - "NETATMO_CLIENT_PASSWORD"
