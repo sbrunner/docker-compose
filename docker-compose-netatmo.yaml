@@ -11,9 +11,7 @@ services:
       - "/volume1/docker/graphite/data:/opt/graphite/storage"
       - "/volume1/docker/graphite/custom_functions:/opt/graphite/webapp/graphite/functions/custom"
       - "/volume1/docker/graphite/statd:/opt/statsd/config"
-      - "/volume1/docker/graphite/redis:/var/lib/redis"
       - "/volume1/docker/graphite/log:/var/log"
-      - "/volume1/docker/graphite/logrotate.d:/etc/logrotate.d"
       - "/volume1/docker/graphite/config:/opt/graphite/conf"
   netatmo-exporter:
     container_name: "netatmo-exporter"
@@ -31,7 +29,7 @@ services:
     container_name: "netatmo2graphite"
     environment:
       #- "LOGLEVEL=DEBUG"
-      - "GRAPHITE_HOST=192.168.0.20"
+      - "GRAPHITE_HOST=graphite"
       - "NETATMO_CLIENT_PASSWORD"
       - "NETATMO_CLIENT_USERNAME"
       - "NETATMO_CLIENT_SECRET"
