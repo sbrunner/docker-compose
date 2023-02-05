@@ -11,7 +11,7 @@ services:
     restart: unless-stopped
   container-exporter:
     container_name: ${CONTAINER_PREFIX}container-exporter
-    image: prom/container-exporter
+    image: prom/container-exporter:latest
     ports:
       - ${CONTAINER_EXPORTER_PORT}:9104/tcp
     volumes:
@@ -90,7 +90,7 @@ services:
     restart: unless-stopped
   promtail:
     container_name: ${CONTAINER_PREFIX}promtail
-    image: grafana/promtail
+    image: grafana/promtail:latest
     command:
       - -config.file=/etc/promtail/config.yaml
     volumes:
