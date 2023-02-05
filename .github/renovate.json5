@@ -1,0 +1,37 @@
+{
+  extends: ["config:base"],
+  timezone: "Europe/Zurich",
+  schedule: "on the first day of the month",
+  labels: ["dependencies"],
+  separateMajorMinor: true,
+  separateMinorPatch: true,
+  prHourlyLimit: 0,
+  prConcurrentLimit: 0,
+  lockFileMaintenance: {
+    enabled: true,
+    automerge: true,
+    schedule: "on the first day of the month",
+  },
+  "pre-commit": { enabled: true },
+  packageRules: [
+    /** Automerge the patch, the minor and the dev dependency */
+    {
+      matchBaseBranches: ["master"],
+      matchUpdateTypes: ["minor", "patch"],
+      automerge: true,
+    },
+    {
+      matchDepTypes: ["devDependencies"],
+      automerge: true,
+    },
+    /** Group the patch and the minor */
+    {
+      matchUpdateTypes: ["patch"],
+      groupName: "all patch versions",
+    },
+    {
+      matchUpdateTypes: ["minor"],
+      groupName: "all minor versions",
+    },
+  ],
+}
