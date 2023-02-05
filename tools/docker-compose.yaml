@@ -21,11 +21,12 @@ services:
       - TZ
       - COMPOSE_PROJECT_NAME
     volumes:
-      - /volume1/data:/ds/data
-      - /volume1/homes:/ds/homes
+      - /volume1/data:/volume1/data
+      - /volume1/homes:/volume1/homes
       - ${CONFIGURATION_FOLDER}/ubuntu/root:/root
-      - /volume1/logs:/ds/logs
-      - /volume1/paperless:/ds/paperless
+      - /volume1/logs:/volume1/logs
+      - /volume1/paperless:/volume1/paperless
+      - ${CONFIGURATION_FOLDER}/ubuntu/crontab:/etc/crontab
     working_dir: /ds
     restart: unless-stopped
   watchtower:
