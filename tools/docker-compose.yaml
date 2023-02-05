@@ -12,11 +12,11 @@ services:
     restart: unless-stopped
   ubuntu:
     container_name: ${CONTAINER_PREFIX}ubuntu
-    image: ubuntu:latest
+    image: sbrunner/vim:latest
     command:
-      - tail
-      - -f
-      - /dev/null
+      - bash
+      - -c
+      - cron && tail -f /dev/null
     environment:
       - TZ
       - COMPOSE_PROJECT_NAME
