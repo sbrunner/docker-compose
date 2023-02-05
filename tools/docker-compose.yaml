@@ -20,6 +20,8 @@ services:
     environment:
       - "TZ"
       - "COMPOSE_PROJECT_NAME"
+      - TEST1
+    env_file: ubuntu.env
     volumes:
       - "/volume1/data:/ds/data"
       - "/volume1/homes:/ds/homes"
