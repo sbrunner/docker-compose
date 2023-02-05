@@ -24,6 +24,7 @@ services:
       - /volume1/data:/volume1/data
       - /volume1/homes:/volume1/homes
       - ${CONFIGURATION_FOLDER}/ubuntu/root:/root
+      - ${CONFIGURATION_FOLDER}/ubuntu/logs:/logs
       - /volume1/logs:/volume1/logs
       - /volume1/paperless:/volume1/paperless
       - ${CONFIGURATION_FOLDER}/ubuntu/crontab:/etc/crontab
