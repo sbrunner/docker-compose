@@ -1,44 +1,44 @@
 version: '3.6'
 services:
   graphite:
-    container_name: 'graphite'
-    image: 'sitespeedio/graphite:latest'
+    container_name: graphite
+    image: sitespeedio/graphite:latest
     ports:
-      - '2003:2003/tcp'
-      - '2002:80/tcp'
+      - 2003:2003/tcp
+      - 2002:80/tcp
     volumes:
-      - '/volume1/docker/graphite/data:/opt/graphite/storage'
-      - '/volume1/docker/graphite/custom_functions:/opt/graphite/webapp/graphite/functions/custom'
-      - '/volume1/docker/graphite/statd:/opt/statsd/config'
-      - '/volume1/docker/graphite/log:/var/log'
-      - '/volume1/docker/graphite/config:/opt/graphite/conf'
+      - /volume1/docker/graphite/data:/opt/graphite/storage
+      - /volume1/docker/graphite/custom_functions:/opt/graphite/webapp/graphite/functions/custom
+      - /volume1/docker/graphite/statd:/opt/statsd/config
+      - /volume1/docker/graphite/log:/var/log
+      - /volume1/docker/graphite/config:/opt/graphite/conf
     restart: unless-stopped
   netatmo-exporter:
-    container_name: 'netatmo-exporter'
+    container_name: netatmo-exporter
     environment:
-      - 'NETATMO_EXPORTER_ADDR=netatmo-exporter:9210'
-      - 'NETATMO_CLIENT_PASSWORD'
-      - 'NETATMO_CLIENT_USERNAME'
-      - 'NETATMO_CLIENT_SECRET'
-      - 'NETATMO_CLIENT_ID'
-    image: 'xperimental/netatmo-exporter:latest'
+      - NETATMO_EXPORTER_ADDR=netatmo-exporter:9210
+      - NETATMO_CLIENT_PASSWORD
+      - NETATMO_CLIENT_USERNAME
+      - NETATMO_CLIENT_SECRET
+      - NETATMO_CLIENT_ID
+    image: xperimental/netatmo-exporter:latest
     ports:
-      - '9210:9210/tcp'
+      - 9210:9210/tcp
     restart: unless-stopped
   netatmo2graphite:
-    container_name: 'netatmo2graphite'
+    container_name: netatmo2graphite
     environment:
       #- "LOGLEVEL=DEBUG"
-      - 'GRAPHITE_HOST=graphite'
-      - 'NETATMO_CLIENT_PASSWORD'
-      - 'NETATMO_CLIENT_USERNAME'
-      - 'NETATMO_CLIENT_SECRET'
-      - 'NETATMO_CLIENT_ID'
-      - 'DAEMON_DELAY_SECONDS=300'
-      - 'DAEMON_DEFAULT_TIMESTAMP=1635368400'
-      - 'DAEMON_PROCESS_ADD_ON_IGNORE_SECOUNDS=86400'
-      - 'DAEMON_PROCESS_MAX_MISSING_SECOUNDS=1000000'
-    image: 'sbrunner/netatmo2graphite:latest'
+      - GRAPHITE_HOST=graphite
+      - NETATMO_CLIENT_PASSWORD
+      - NETATMO_CLIENT_USERNAME
+      - NETATMO_CLIENT_SECRET
+      - NETATMO_CLIENT_ID
+      - DAEMON_DELAY_SECONDS=300
+      - DAEMON_DEFAULT_TIMESTAMP=1635368400
+      - DAEMON_PROCESS_ADD_ON_IGNORE_SECOUNDS=86400
+      - DAEMON_PROCESS_MAX_MISSING_SECOUNDS=1000000
+    image: sbrunner/netatmo2graphite:latest
     volumes:
-      - '/volume1/docker/netatmo2graphite/config:/etc/netatmo2graphite'
+      - /volume1/docker/netatmo2graphite/config:/etc/netatmo2graphite
     restart: unless-stopped

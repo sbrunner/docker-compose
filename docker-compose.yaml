@@ -1,13 +1,13 @@
 version: '3.6'
 services:
   portainer:
-    container_name: 'portainer'
-    image: 'portainer/portainer'
-    network_mode: 'bridge'
+    container_name: portainer
+    image: portainer/portainer
+    network_mode: bridge
     ports:
-      - '8000:8000/tcp'
-      - '9000:9000/tcp'
-    restart: 'unless-stopped'
+      - 8000:8000/tcp
+      - 9000:9000/tcp
+    restart: unless-stopped
     volumes:
-      - '/var/run/docker.sock:/var/run/docker.sock'
-      - '/volume1/docker/portainer/data:/data'
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /volume1/docker/portainer/data:/data

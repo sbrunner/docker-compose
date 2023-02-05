@@ -2,93 +2,93 @@ version: '3.6'
 services:
   paperless:
     container_name: paperless
-    image: 'paperlessngx/paperless-ngx:latest'
+    image: paperlessngx/paperless-ngx:latest
     environment:
-      - 'PAPERLESS_WORKER_TIMEOUT=3600'
-      - 'PAPERLESS_URL=http://100.88.77.85:8001'
-      - 'PAPERLESS_CSRF_TRUSTED_ORIGINS=http://100.88.77.85:8001'
-      - 'PAPERLESS_CORS_ALLOWED_HOSTS =http://100.88.77.85:8001'
-      - 'PAPERLESS_ALLOWED_HOSTS=100.88.77.85'
-      - 'PAPERLESS_DEBUG_=True'
-      - 'PAPERLESS_IGNORE_DATES=17-03-1977,17-03-2017,03-11-1977,24-12-2015,04-03-2017'
-      - 'PAPERLESS_AUTO_LOGIN_USERNAME=admin'
-      - 'PAPERLESS_FILENAME_FORMAT={correspondent}/{document_type}/{created_year}/{title}-{created}'
-      - 'PAPERLESS_FORGIVING_OCR=true'
-      - 'PAPERLESS_INLINE_DOC=true'
-      - 'PAPERLESS_LIST_PER_PAGE=100'
-      - 'PAPERLESS_DISABLE_LOGIN=true'
-      - 'PAPERLESS_OCR_THREADS=1'
-      - 'PAPERLESS_OCR_LANGUAGES=fra+eng'
-      - 'USERMAP_GID=104555'
-      - 'USERMAP_UID=114670'
-      - 'PAPERLESS_CONVERT_MEMORY_LIMIT=32000000'
-      - 'PAPERLESS_DBHOST=postgres'
-      - 'PAPERLESS_DBUSER=paperless'
-      - 'PAPERLESS_DBPASS=1234'
-      - 'PAPERLESS_REDIS=redis://redis:6379'
-      - 'OMP_THREAD_LIMIT=1'
-      - 'PAPERLESS_CONSUMPTION_DIR=/consume'
-      - 'PAPERLESS_EXPORT_DIR=/export'
-      - 'PAPERLESS_TIME_ZONE=Europe/Zurich'
-      - 'TZ=Europe/Zurich'
+      - PAPERLESS_WORKER_TIMEOUT=3600
+      - PAPERLESS_URL=http://100.88.77.85:8001
+      - PAPERLESS_CSRF_TRUSTED_ORIGINS=http://100.88.77.85:8001
+      - PAPERLESS_CORS_ALLOWED_HOSTS =http://100.88.77.85:8001
+      - PAPERLESS_ALLOWED_HOSTS=100.88.77.85
+      - PAPERLESS_DEBUG_=True
+      - PAPERLESS_IGNORE_DATES=17-03-1977,17-03-2017,03-11-1977,24-12-2015,04-03-2017
+      - PAPERLESS_AUTO_LOGIN_USERNAME=admin
+      - PAPERLESS_FILENAME_FORMAT={correspondent}/{document_type}/{created_year}/{title}-{created}
+      - PAPERLESS_FORGIVING_OCR=true
+      - PAPERLESS_INLINE_DOC=true
+      - PAPERLESS_LIST_PER_PAGE=100
+      - PAPERLESS_DISABLE_LOGIN=true
+      - PAPERLESS_OCR_THREADS=1
+      - PAPERLESS_OCR_LANGUAGES=fra+eng
+      - USERMAP_GID=104555
+      - USERMAP_UID=114670
+      - PAPERLESS_CONVERT_MEMORY_LIMIT=32000000
+      - PAPERLESS_DBHOST=postgres
+      - PAPERLESS_DBUSER=paperless
+      - PAPERLESS_DBPASS=1234
+      - PAPERLESS_REDIS=redis://redis:6379
+      - OMP_THREAD_LIMIT=1
+      - PAPERLESS_CONSUMPTION_DIR=/consume
+      - PAPERLESS_EXPORT_DIR=/export
+      - PAPERLESS_TIME_ZONE=Europe/Zurich
+      - TZ=Europe/Zurich
     ports:
-      - '8001:8000/tcp'
+      - 8001:8000/tcp
     volumes:
-      - '/volume1/paperless/media:/usr/src/paperless/media2'
-      - '/volume1/paperless/consume:/consume'
-      - '/volume1/docker/paperless/consume:/usr/src/paperless/consume'
-      - '/volume1/docker/paperless/data:/usr/src/paperless/data'
-      - '/volume1/docker/paperless/src_export:/usr/src/paperless/export'
-      - '/volume1/docker/paperless/dumpdata:/dumpdata'
-      - '/volume1/docker/paperless/export:/export'
-      - '/volume1/docker/paperless/media:/usr/src/paperless/media'
+      - /volume1/paperless/media:/usr/src/paperless/media2
+      - /volume1/paperless/consume:/consume
+      - /volume1/docker/paperless/consume:/usr/src/paperless/consume
+      - /volume1/docker/paperless/data:/usr/src/paperless/data
+      - /volume1/docker/paperless/src_export:/usr/src/paperless/export
+      - /volume1/docker/paperless/dumpdata:/dumpdata
+      - /volume1/docker/paperless/export:/export
+      - /volume1/docker/paperless/media:/usr/src/paperless/media
     restart: unless-stopped
   sbrunner-scan-to-paperless:
     container_name: sbrunner-scan-to-paperless
-    image: 'sbrunner/scan-to-paperless:test'
+    image: sbrunner/scan-to-paperless:test
     volumes:
-      - '/volume1/paperless/scan-codes:/scan-codes'
-      - '/volume1/paperless/scan:/source'
-      - '/volume1/paperless/consume:/destination'
+      - /volume1/paperless/scan-codes:/scan-codes
+      - /volume1/paperless/scan:/source
+      - /volume1/paperless/consume:/destination
     restart: unless-stopped
   sbrunner-scan-to-paperless-master:
     container_name: sbrunner-scan-to-paperless-master
-    image: 'sbrunner/scan-to-paperless:master'
+    image: sbrunner/scan-to-paperless:master
     volumes:
-      - '/volume1/paperless/master/scan:/source'
-      - '/volume1/paperless/consume:/destination'
-      - '/volume1/paperless/master/scan-codes:/scan-codes'
+      - /volume1/paperless/master/scan:/source
+      - /volume1/paperless/consume:/destination
+      - /volume1/paperless/master/scan-codes:/scan-codes
     restart: unless-stopped
   sbrunner-scan-to-paperless-test:
     container_name: sbrunner-scan-to-paperless-test
-    image: 'sbrunner/scan-to-paperless:test'
+    image: sbrunner/scan-to-paperless:test
     environment:
-      - 'PROGRESS=TRUE'
-      - 'EXPERIMENTAL=TRUE'
+      - PROGRESS=TRUE
+      - EXPERIMENTAL=TRUE
     volumes:
-      - '/volume1/paperless/test/scan:/source'
-      - '/volume1/paperless/test/consume:/destination'
-      - '/volume1/paperless/test/scan-codes:/scan-codes'
+      - /volume1/paperless/test/scan:/source
+      - /volume1/paperless/test/consume:/destination
+      - /volume1/paperless/test/scan-codes:/scan-codes
     restart: unless-stopped
   postgres:
     container_name: postgres
-    image: 'postgres:12'
+    image: postgres:12
     command:
-      - 'postgres'
-      - '-c'
-      - 'shared_buffers=256MB'
-      - '-c'
-      - 'work_mem=16MB'
+      - postgres
+      - -c
+      - shared_buffers=256MB
+      - -c
+      - work_mem=16MB
     environment:
-      - 'POSTGRES_DB=paperless'
-      - 'POSTGRES_USER=paperless'
-      - 'POSTGRES_PASSWORD=1234'
+      - POSTGRES_DB=paperless
+      - POSTGRES_USER=paperless
+      - POSTGRES_PASSWORD=1234
     volumes:
-      - '/volume1/Backup/Paperless/pgdata:/var/lib/postgresql/data'
+      - /volume1/Backup/Paperless/pgdata:/var/lib/postgresql/data
     restart: unless-stopped
   redis:
     container_name: redis
-    image: 'redis:6'
+    image: redis:6
     volumes:
-      - '/volume1/docker/redis/data:/data'
+      - /volume1/docker/redis/data:/data
     restart: unless-stopped
