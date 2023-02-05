@@ -92,4 +92,3 @@ services:
     volumes:
       - "/volume1/docker/redis/data:/data"
     restart: unless-stopped
-
