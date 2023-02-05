@@ -4,7 +4,7 @@ services:
     container_name: ${CONTAINER_PREFIX}alertmanager
     image: prom/alertmanager:latest
     ports:
-      - 9093:9093/tcp
+      - ${ALERT_MANAGER_PORT}:9093/tcp
     volumes:
       - /volume1/docker/alertmanager/data:/alertmanager
       - /volume1/docker/alertmanager/config:/etc/alertmanager
@@ -13,7 +13,7 @@ services:
     container_name: ${CONTAINER_PREFIX}container-exporter
     image: prom/container-exporter
     ports:
-      - 9104:9104/tcp
+      - ${CONTAINER_EXPORTER_PORT}:9104/tcp
     volumes:
       - /sys/fs/cgroup:/cgroup
       - /var/run/docker.sock:/var/run/docker.sock
@@ -30,7 +30,7 @@ services:
       - GF_PLUGIN_GRAFANA_IMAGE_RENDERER_RENDERING_IGNORE_HTTPS_ERRORS
       - GF_FEATURE_TOGGLES_ENABLE
     ports:
-      - 3000:3000/tcp
+      - ${GRAFANA_PORT}:3000/tcp
     network_mode: host
     volumes:
       - /volume1/docker/grafana/datasources:/etc/grafana/provisioning/datasources
@@ -43,7 +43,7 @@ services:
     command:
       - -config.file=/etc/loki/config.yaml
     ports:
-      - 3100:3100/tcp
+      - ${LOKI_PORT}:3100/tcp
     volumes:
       - /volume1/docker/loki/wal:/wal
       - /volume1/docker/loki/config:/etc/loki:ro
@@ -54,7 +54,7 @@ services:
     image: prom/node-exporter:latest
     hostname: nas
     ports:
-      - 9100:9100/tcp
+      - ${NODE_EXPORTER_PORT}:9100/tcp
     volumes:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
@@ -69,7 +69,7 @@ services:
       - -config.path
       - /config/config.yaml
     ports:
-      - 9256:9256/tcp
+      - ${PROCESS_EXPORTER_PORT}:9256/tcp
     volumes:
       - /volume1/docker/process-exporter/config:/config
       - /proc:/host/proc
@@ -83,7 +83,7 @@ services:
       - --web.console.libraries=/usr/share/prometheus/console_libraries
       - --web.console.templates=/usr/share/prometheus/consoles
     ports:
-      - 9090:9090/tcp
+      - ${PROMETHEUS_PORT}:9090/tcp
     volumes:
       - /volume1/docker/prometheus/config:/etc/prometheus
       - /volume1/docker/prometheus/data:/prometheus
@@ -104,8 +104,8 @@ services:
     command:
       - --config.file=/etc/snmp_exporter/snmp.yml
     ports:
-      - 116:116/udp
-      - 9116:9116/tcp
+      - ${SNMP_EXPORTER_PORT1}:116/udp
+      - ${SNMP_EXPORTER_PORT2}:9116/tcp
     volumes:
       - /volume1/docker/snmp-exporter/config:/etc/snmp_exporter
     restart: unless-stopped
