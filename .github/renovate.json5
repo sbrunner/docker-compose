@@ -16,7 +16,7 @@
   regexManagers: [
     {
       fileMatch: ['.*/.env$'],
-      matchStrings: ['_TAG=(?<currentValue>[^\\s]+) +# (?<depName>[^\\s]+)$'],
+      matchStrings: ['_TAG=(?<currentValue>[^\\s]+) +# (?<depName>[^\\s]+)'],
       datasourceTemplate: 'docker',
     },
   ],
