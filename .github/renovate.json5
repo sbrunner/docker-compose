@@ -15,8 +15,8 @@
   'pre-commit': { enabled: true },
   regexManagers: [
     {
-      fileMatch: ['^.*/.env'],
-      matchStrings: ['.*_TAG=(?<currentValue>[^ ]+) +# (?<depName>[^ ]+)'],
+      fileMatch: ['^.*/.env$'],
+      matchStrings: ['^.*_TAG=(?<currentValue>[^ ]+) +# (?<depName>[^ ]+)$'],
       datasourceTemplate: 'docker',
     },
   ],
