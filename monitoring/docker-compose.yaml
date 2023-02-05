@@ -6,8 +6,8 @@ services:
     ports:
       - ${ALERT_MANAGER_PORT}:9093/tcp
     volumes:
-      - /volume1/docker/alertmanager/data:/alertmanager
-      - /volume1/docker/alertmanager/config:/etc/alertmanager
+      - ${CONFIGURATION_FOLDER}/alertmanager/data:/alertmanager
+      - ${CONFIGURATION_FOLDER}/alertmanager/config:/etc/alertmanager
     restart: unless-stopped
   container-exporter:
     container_name: ${CONTAINER_PREFIX}container-exporter
@@ -33,9 +33,9 @@ services:
       - ${GRAFANA_PORT}:3000/tcp
     network_mode: host
     volumes:
-      - /volume1/docker/grafana/datasources:/etc/grafana/provisioning/datasources
-      - /volume1/docker/grafana/data:/var/lib/grafana
-      - /volume1/docker/grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ${CONFIGURATION_FOLDER}/grafana/datasources:/etc/grafana/provisioning/datasources
+      - ${CONFIGURATION_FOLDER}/grafana/data:/var/lib/grafana
+      - ${CONFIGURATION_FOLDER}/grafana/dashboards:/etc/grafana/provisioning/dashboards
     restart: unless-stopped
   loki:
     container_name: ${CONTAINER_PREFIX}loki
@@ -45,9 +45,9 @@ services:
     ports:
       - ${LOKI_PORT}:3100/tcp
     volumes:
-      - /volume1/docker/loki/wal:/wal
-      - /volume1/docker/loki/config:/etc/loki:ro
-      - /volume1/docker/loki/data:/loki/chunks
+      - ${CONFIGURATION_FOLDER}/loki/wal:/wal
+      - ${CONFIGURATION_FOLDER}/loki/config:/etc/loki:ro
+      - ${CONFIGURATION_FOLDER}/loki/data:/loki/chunks
     restart: unless-stopped
   node-exporter:
     container_name: ${CONTAINER_PREFIX}node-exporter
@@ -71,7 +71,7 @@ services:
     ports:
       - ${PROCESS_EXPORTER_PORT}:9256/tcp
     volumes:
-      - /volume1/docker/process-exporter/config:/config
+      - ${CONFIGURATION_FOLDER}/process-exporter/config:/config
       - /proc:/host/proc
     restart: unless-stopped
   prometheus:
@@ -85,8 +85,8 @@ services:
     ports:
       - ${PROMETHEUS_PORT}:9090/tcp
     volumes:
-      - /volume1/docker/prometheus/config:/etc/prometheus
-      - /volume1/docker/prometheus/data:/prometheus
+      - ${CONFIGURATION_FOLDER}/prometheus/config:/etc/prometheus
+      - ${CONFIGURATION_FOLDER}/prometheus/data:/prometheus
     restart: unless-stopped
   promtail:
     container_name: ${CONTAINER_PREFIX}promtail
@@ -94,7 +94,7 @@ services:
     command:
       - -config.file=/etc/promtail/config.yaml
     volumes:
-      - /volume1/docker/promtail/config:/etc/promtail
+      - ${CONFIGURATION_FOLDER}/promtail/config:/etc/promtail
       - /var/log:/var/log
       - /volume1/logs/synoscheduler:/volume1/logs/synoscheduler
     restart: unless-stopped
@@ -107,5 +107,5 @@ services:
       - ${SNMP_EXPORTER_PORT1}:116/udp
       - ${SNMP_EXPORTER_PORT2}:9116/tcp
     volumes:
-      - /volume1/docker/snmp-exporter/config:/etc/snmp_exporter
+      - ${CONFIGURATION_FOLDER}/snmp-exporter/config:/etc/snmp_exporter
     restart: unless-stopped

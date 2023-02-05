@@ -1,20 +1,20 @@
 version: '3.6'
 services:
   graphite:
-    container_name: graphite
+    container_name: ${CONTAINER_PREFIX}graphite
     image: sitespeedio/graphite:latest
     ports:
       - 2003:2003/tcp
       - 2002:80/tcp
     volumes:
-      - /volume1/docker/graphite/data:/opt/graphite/storage
-      - /volume1/docker/graphite/custom_functions:/opt/graphite/webapp/graphite/functions/custom
-      - /volume1/docker/graphite/statd:/opt/statsd/config
-      - /volume1/docker/graphite/log:/var/log
-      - /volume1/docker/graphite/config:/opt/graphite/conf
+      - ${CONFIGURATION_FOLDER}/graphite/data:/opt/graphite/storage
+      - ${CONFIGURATION_FOLDER}/graphite/custom_functions:/opt/graphite/webapp/graphite/functions/custom
+      - ${CONFIGURATION_FOLDER}/graphite/statd:/opt/statsd/config
+      - ${CONFIGURATION_FOLDER}/graphite/log:/var/log
+      - ${CONFIGURATION_FOLDER}/graphite/config:/opt/graphite/conf
     restart: unless-stopped
   netatmo-exporter:
-    container_name: netatmo-exporter
+    container_name: ${CONTAINER_PREFIX}netatmo-exporter
     environment:
       - NETATMO_EXPORTER_ADDR=netatmo-exporter:9210
       - NETATMO_CLIENT_PASSWORD
@@ -26,7 +26,7 @@ services:
       - 9210:9210/tcp
     restart: unless-stopped
   netatmo2graphite:
-    container_name: netatmo2graphite
+    container_name: ${CONTAINER_PREFIX}netatmo2graphite
     environment:
       #- "LOGLEVEL=DEBUG"
       - GRAPHITE_HOST=graphite
@@ -40,5 +40,5 @@ services:
       - DAEMON_PROCESS_MAX_MISSING_SECOUNDS=1000000
     image: sbrunner/netatmo2graphite:latest
     volumes:
-      - /volume1/docker/netatmo2graphite/config:/etc/netatmo2graphite
+      - ${CONFIGURATION_FOLDER}/netatmo2graphite/config:/etc/netatmo2graphite
     restart: unless-stopped

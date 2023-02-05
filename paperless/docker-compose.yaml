@@ -1,50 +1,132 @@
 version: '3.6'
 services:
   paperless:
-    container_name: paperless
+    container_name: ${CONTAINER_PREFIX}paperless
     image: paperlessngx/paperless-ngx:latest
     environment:
-      - PAPERLESS_WORKER_TIMEOUT=3600
-      - PAPERLESS_URL=http://100.88.77.85:8001
-      - PAPERLESS_CSRF_TRUSTED_ORIGINS=http://100.88.77.85:8001
-      - PAPERLESS_CORS_ALLOWED_HOSTS =http://100.88.77.85:8001
-      - PAPERLESS_ALLOWED_HOSTS=100.88.77.85
-      - PAPERLESS_DEBUG_=True
-      - PAPERLESS_IGNORE_DATES=17-03-1977,17-03-2017,03-11-1977,24-12-2015,04-03-2017
-      - PAPERLESS_AUTO_LOGIN_USERNAME=admin
-      - PAPERLESS_FILENAME_FORMAT={correspondent}/{document_type}/{created_year}/{title}-{created}
-      - PAPERLESS_FORGIVING_OCR=true
-      - PAPERLESS_INLINE_DOC=true
-      - PAPERLESS_LIST_PER_PAGE=100
-      - PAPERLESS_DISABLE_LOGIN=true
-      - PAPERLESS_OCR_THREADS=1
-      - PAPERLESS_OCR_LANGUAGES=fra+eng
-      - USERMAP_GID=104555
-      - USERMAP_UID=114670
-      - PAPERLESS_CONVERT_MEMORY_LIMIT=32000000
-      - PAPERLESS_DBHOST=postgres
-      - PAPERLESS_DBUSER=paperless
-      - PAPERLESS_DBPASS=1234
-      - PAPERLESS_REDIS=redis://redis:6379
-      - OMP_THREAD_LIMIT=1
-      - PAPERLESS_CONSUMPTION_DIR=/consume
-      - PAPERLESS_EXPORT_DIR=/export
-      - PAPERLESS_TIME_ZONE=Europe/Zurich
-      - TZ=Europe/Zurich
+      - PAPERLESS_REDIS
+      - PAPERLESS_DBENGINE
+      - PAPERLESS_DBHOST
+      - PAPERLESS_DBPORT
+      - PAPERLESS_DBNAME
+      - PAPERLESS_DBUSER
+      - PAPERLESS_DBPASS
+      - PAPERLESS_DBSSLMODE
+      - PAPERLESS_DB_TIMEOUT
+      - PAPERLESS_CONSUMPTION_DIR
+      - PAPERLESS_DATA_DIR
+      - PAPERLESS_TRASH_DIR
+      - PAPERLESS_MEDIA_ROOT
+      - PAPERLESS_STATICDIR
+      - PAPERLESS_FILENAME_FORMAT
+      - PAPERLESS_FILENAME_FORMAT_REMOVE_NONE
+      - PAPERLESS_LOGGING_DIR
+      - PAPERLESS_NLTK_DIR
+      - PAPERLESS_LOGROTATE_MAX_SIZE
+      - PAPERLESS_LOGROTATE_MAX_BACKUPS
+      - PAPERLESS_SECRET_KEY
+      - PAPERLESS_URL
+      - PAPERLESS_CSRF_TRUSTED_ORIGINS
+      - PAPERLESS_ALLOWED_HOSTS
+      - PAPERLESS_CORS_ALLOWED_HOSTS
+      - PAPERLESS_FORCE_SCRIPT_NAME
+      - PAPERLESS_STATIC_URL
+      - PAPERLESS_AUTO_LOGIN_USERNAME
+      - PAPERLESS_ADMIN_USER
+      - PAPERLESS_ADMIN_MAIL
+      - PAPERLESS_ADMIN_PASSWORD
+      - PAPERLESS_COOKIE_PREFIX
+      - PAPERLESS_ENABLE_HTTP_REMOTE_USER
+      - PAPERLESS_HTTP_REMOTE_USER_HEADER_NAME
+      - PAPERLESS_LOGOUT_REDIRECT_URL
+      - PAPERLESS_OCR_LANGUAGE
+      - PAPERLESS_OCR_MODE
+      - PAPERLESS_OCR_CLEAN
+      - PAPERLESS_OCR_DESKEW
+      - PAPERLESS_OCR_ROTATE_PAGES
+      - PAPERLESS_OCR_ROTATE_PAGES_THRESHOLD
+      - PAPERLESS_OCR_OUTPUT_TYPE
+      - PAPERLESS_OCR_PAGES
+      - PAPERLESS_OCR_IMAGE_DPI
+      - PAPERLESS_OCR_MAX_IMAGE_PIXELS
+      - PAPERLESS_OCR_USER_ARGS
+      - PAPERLESS_TIKA_ENABLED
+      - PAPERLESS_TIKA_ENDPOINT
+      - PAPERLESS_TIKA_GOTENBERG_ENDPOINT
+      - PAPERLESS_TASK_WORKERS
+      - PAPERLESS_THREADS_PER_WORKER
+      - PAPERLESS_WORKER_TIMEOUT
+      - PAPERLESS_WORKER_RETRY
+      - PAPERLESS_TIME_ZONE
+      - PAPERLESS_ENABLE_NLTK
+      - PAPERLESS_EMAIL_TASK_CRON
+      - PAPERLESS_TRAIN_TASK_CRON
+      - PAPERLESS_INDEX_TASK_CRON
+      - PAPERLESS_SANITY_TASK_CRON
+      - PAPERLESS_CONSUMER_POLLING
+      - PAPERLESS_CONSUMER_POLLING_RETRY_COUNT
+      - PAPERLESS_CONSUMER_POLLING_DELAY
+      - PAPERLESS_CONSUMER_INOTIFY_DELAY
+      - PAPERLESS_CONSUMER_DELETE_DUPLICATES
+      - PAPERLESS_CONSUMER_RECURSIVE
+      - PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS
+      - PAPERLESS_CONSUMER_ENABLE_BARCODES
+      - PAPERLESS_CONSUMER_BARCODE_TIFF_SUPPORT
+      - PAPERLESS_CONSUMER_ENABLE_ASN_BARCODE
+      - PAPERLESS_CONVERT_MEMORY_LIMIT
+      - PAPERLESS_CONVERT_TMPDIR
+      - PAPERLESS_POST_CONSUME_SCRIPT
+      - PAPERLESS_FILENAME_DATE_ORDER
+      - PAPERLESS_NUMBER_OF_SUGGESTED_DATES
+      - PAPERLESS_THUMBNAIL_FONT_NAME
+      - PAPERLESS_IGNORE_DATES
+      - PAPERLESS_DATE_ORDER
+      - PAPERLESS_CONSUMER_IGNORE_PATTERNS
+      - PAPERLESS_CONVERT_BINARY
+      - PAPERLESS_GS_BINARY
+      - PAPERLESS_WEBSERVER_WORKERS
+      - PAPERLESS_BIND_ADDR
+      - PAPERLESS_PORT
+      - USERMAP_UID
+      - USERMAP_GID
+      - PAPERLESS_OCR_LANGUAGES
+      - PAPERLESS_ENABLE_FLOWER
+      - PAPERLESS_ENABLE_UPDATE_CHECK
+      - OMP_SCHEDULE
+      - OMP_NUM_THREADS
+      - OMP_DYNAMIC
+      - OMP_PROC_BIND
+      - OMP_PLACES
+      - OMP_STACKSIZE
+      - OMP_WAIT_POLICY
+      - OMP_MAX_ACTIVE_LEVELS
+      - OMP_NESTED
+      - OMP_THREAD_LIMIT
+      - OMP_CANCELLATION
+      - OMP_DISPLAY_ENV
+      - OMP_DISPLAY_AFFINITY
+      - OMP_AFFINITY_FORMAT
+      - OMP_DEFAULT_DEVICE
+      - OMP_MAX_TASK_PRIORITY
+      - OMP_TARGET_OFFLOAD
+      - OMP_TOOL
+      - OMP_TOOL_LIBRARIES
+      - OMP_DEBUG
+      - OMP_ALLOCATOR
     ports:
       - 8001:8000/tcp
     volumes:
       - /volume1/paperless/media:/usr/src/paperless/media2
       - /volume1/paperless/consume:/consume
-      - /volume1/docker/paperless/consume:/usr/src/paperless/consume
-      - /volume1/docker/paperless/data:/usr/src/paperless/data
-      - /volume1/docker/paperless/src_export:/usr/src/paperless/export
-      - /volume1/docker/paperless/dumpdata:/dumpdata
-      - /volume1/docker/paperless/export:/export
-      - /volume1/docker/paperless/media:/usr/src/paperless/media
+      - ${CONFIGURATION_FOLDER}/paperless/consume:/usr/src/paperless/consume
+      - ${CONFIGURATION_FOLDER}/paperless/data:/usr/src/paperless/data
+      - ${CONFIGURATION_FOLDER}/paperless/src_export:/usr/src/paperless/export
+      - ${CONFIGURATION_FOLDER}/paperless/dumpdata:/dumpdata
+      - ${CONFIGURATION_FOLDER}/paperless/export:/export
+      - ${CONFIGURATION_FOLDER}/paperless/media:/usr/src/paperless/media
     restart: unless-stopped
   sbrunner-scan-to-paperless:
-    container_name: sbrunner-scan-to-paperless
+    container_name: ${CONTAINER_PREFIX}sbrunner-scan-to-paperless
     image: sbrunner/scan-to-paperless:test
     volumes:
       - /volume1/paperless/scan-codes:/scan-codes
@@ -52,7 +134,7 @@ services:
       - /volume1/paperless/consume:/destination
     restart: unless-stopped
   sbrunner-scan-to-paperless-master:
-    container_name: sbrunner-scan-to-paperless-master
+    container_name: ${CONTAINER_PREFIX}sbrunner-scan-to-paperless-master
     image: sbrunner/scan-to-paperless:master
     volumes:
       - /volume1/paperless/master/scan:/source
@@ -60,7 +142,7 @@ services:
       - /volume1/paperless/master/scan-codes:/scan-codes
     restart: unless-stopped
   sbrunner-scan-to-paperless-test:
-    container_name: sbrunner-scan-to-paperless-test
+    container_name: ${CONTAINER_PREFIX}sbrunner-scan-to-paperless-test
     image: sbrunner/scan-to-paperless:test
     environment:
       - PROGRESS=TRUE
@@ -71,7 +153,7 @@ services:
       - /volume1/paperless/test/scan-codes:/scan-codes
     restart: unless-stopped
   postgres:
-    container_name: postgres
+    container_name: ${CONTAINER_PREFIX}postgres
     image: postgres:12
     command:
       - postgres
@@ -87,8 +169,8 @@ services:
       - /volume1/Backup/Paperless/pgdata:/var/lib/postgresql/data
     restart: unless-stopped
   redis:
-    container_name: redis
+    container_name: ${CONTAINER_PREFIX}redis
     image: redis:6
     volumes:
-      - /volume1/docker/redis/data:/data
+      - ${CONFIGURATION_FOLDER}/redis/data:/data
     restart: unless-stopped
