@@ -2,7 +2,7 @@ version: '3.6'
 services:
   paperless:
     container_name: ${CONTAINER_PREFIX}paperless
-    image: paperlessngx/paperless-ngx:latest
+    image: paperlessngx/paperless-ngx:${PAPERLESS_TAG}
     environment:
       - PAPERLESS_REDIS
       - PAPERLESS_DBENGINE
@@ -154,7 +154,7 @@ services:
     restart: unless-stopped
   postgres:
     container_name: ${CONTAINER_PREFIX}postgres
-    image: postgres:12
+    image: postgres:${POSTGRES_TAG}
     command:
       - postgres
       - -c
@@ -170,7 +170,7 @@ services:
     restart: unless-stopped
   redis:
     container_name: ${CONTAINER_PREFIX}redis
-    image: redis:6
+    image: redis:${REDIS_TAG}
     volumes:
       - ${CONFIGURATION_FOLDER}/redis/data:/data
     restart: unless-stopped

@@ -13,6 +13,13 @@
     schedule: 'on the first day of the month',
   },
   'pre-commit': { enabled: true },
+  regexManagers: [
+    {
+      fileMatch: ['^.*/.env'],
+      matchStrings: ['.*_TAG=(?<currentValue>[^ ]+) +# (?<depName>[^ ]+)'],
+      datasourceTemplate: 'docker',
+    },
+  ],
   packageRules: [
     /** Automerge the patch, the minor and the dev dependency */
     {
