@@ -21,7 +21,7 @@ services:
       - "TZ"
       - "COMPOSE_PROJECT_NAME"
       - TEST1
-    env_file: .env
+      - TEST2
     volumes:
       - "/volume1/data:/ds/data"
       - "/volume1/homes:/ds/homes"
