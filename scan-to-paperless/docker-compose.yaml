@@ -1,7 +1,7 @@
 version: '3.6'
 services:
   sbrunner-scan-to-paperless:
-    container_name: ${CONTAINER_PREFIX}-scan-to-paperless
+    container_name: ${CONTAINER_PREFIX}scan-to-paperless
     image: sbrunner/scan-to-paperless:${SCAN_TO_PAPERLESS_TAG}
     environment:
       - PROGRESS
