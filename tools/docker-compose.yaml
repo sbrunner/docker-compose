@@ -19,6 +19,7 @@ services:
       - "/dev/null"
     environment:
       - "TZ"
+      - "COMPOSE_PROJECT_NAME"
     volumes:
       - "/volume1/data:/ds/data"
       - "/volume1/homes:/ds/homes"
