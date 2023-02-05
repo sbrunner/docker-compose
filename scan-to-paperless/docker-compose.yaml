@@ -1,0 +1,13 @@
+version: '3.6'
+services:
+  sbrunner-scan-to-paperless:
+    container_name: ${CONTAINER_PREFIX}sbrunner-scan-to-paperless
+    image: sbrunner/scan-to-paperless:${SCAN_TO_PAPERLESS_TAG}
+    environment:
+      - PROGRESS
+      - EXPERIMENTAL
+    volumes:
+      - ${PAPERLESS_FOLDER}/scan-codes:/scan-codes
+      - ${PAPERLESS_FOLDER}/scan:/source
+      - ${PAPERLESS_FOLDER}/consume:/destination
+    restart: unless-stopped

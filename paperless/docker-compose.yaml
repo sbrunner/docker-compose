@@ -116,41 +116,14 @@ services:
     ports:
       - 8001:8000/tcp
     volumes:
-      - /volume1/paperless/media:/usr/src/paperless/media2
-      - /volume1/paperless/consume:/consume
+      - ${PAPERLESS_FOLDER}/media:/usr/src/paperless/media2
+      - ${PAPERLESS_FOLDER}/consume:/consume
       - ${CONFIGURATION_FOLDER}/paperless/consume:/usr/src/paperless/consume
       - ${CONFIGURATION_FOLDER}/paperless/data:/usr/src/paperless/data
       - ${CONFIGURATION_FOLDER}/paperless/src_export:/usr/src/paperless/export
       - ${CONFIGURATION_FOLDER}/paperless/dumpdata:/dumpdata
       - ${CONFIGURATION_FOLDER}/paperless/export:/export
       - ${CONFIGURATION_FOLDER}/paperless/media:/usr/src/paperless/media
-    restart: unless-stopped
-  sbrunner-scan-to-paperless:
-    container_name: ${CONTAINER_PREFIX}sbrunner-scan-to-paperless
-    image: sbrunner/scan-to-paperless:test
-    volumes:
-      - /volume1/paperless/scan-codes:/scan-codes
-      - /volume1/paperless/scan:/source
-      - /volume1/paperless/consume:/destination
-    restart: unless-stopped
-  sbrunner-scan-to-paperless-master:
-    container_name: ${CONTAINER_PREFIX}sbrunner-scan-to-paperless-master
-    image: sbrunner/scan-to-paperless:master
-    volumes:
-      - /volume1/paperless/master/scan:/source
-      - /volume1/paperless/consume:/destination
-      - /volume1/paperless/master/scan-codes:/scan-codes
-    restart: unless-stopped
-  sbrunner-scan-to-paperless-test:
-    container_name: ${CONTAINER_PREFIX}sbrunner-scan-to-paperless-test
-    image: sbrunner/scan-to-paperless:test
-    environment:
-      - PROGRESS=TRUE
-      - EXPERIMENTAL=TRUE
-    volumes:
-      - /volume1/paperless/test/scan:/source
-      - /volume1/paperless/test/consume:/destination
-      - /volume1/paperless/test/scan-codes:/scan-codes
     restart: unless-stopped
   postgres:
     container_name: ${CONTAINER_PREFIX}postgres
@@ -166,7 +139,7 @@ services:
       - POSTGRES_USER=paperless
       - POSTGRES_PASSWORD=1234
     volumes:
-      - /volume1/Backup/Paperless/pgdata:/var/lib/postgresql/data
+      - ${BACKUP_FOLDER}/pgdata:/var/lib/postgresql/data
     restart: unless-stopped
   redis:
     container_name: ${CONTAINER_PREFIX}redis

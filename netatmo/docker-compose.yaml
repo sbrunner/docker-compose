@@ -4,8 +4,8 @@ services:
     container_name: ${CONTAINER_PREFIX}graphite
     image: sitespeedio/graphite:latest
     ports:
-      - 2003:2003/tcp
-      - 2002:80/tcp
+      - ${GRAPHITE_PORT}:2003/tcp
+      - ${GRAPHITE_HTTP_PORT}:80/tcp
     volumes:
       - ${CONFIGURATION_FOLDER}/graphite/data:/opt/graphite/storage
       - ${CONFIGURATION_FOLDER}/graphite/custom_functions:/opt/graphite/webapp/graphite/functions/custom
@@ -16,28 +16,28 @@ services:
   netatmo-exporter:
     container_name: ${CONTAINER_PREFIX}netatmo-exporter
     environment:
-      - NETATMO_EXPORTER_ADDR=netatmo-exporter:9210
+      - NETATMO_EXPORTER_ADDR=${CONTAINER_PREFIX}netatmo-exporter:9210
       - NETATMO_CLIENT_PASSWORD
       - NETATMO_CLIENT_USERNAME
       - NETATMO_CLIENT_SECRET
       - NETATMO_CLIENT_ID
     image: xperimental/netatmo-exporter:latest
     ports:
-      - 9210:9210/tcp
+      - ${NETATMO_EXPORTER_PORT}:9210/tcp
     restart: unless-stopped
   netatmo2graphite:
     container_name: ${CONTAINER_PREFIX}netatmo2graphite
     environment:
-      #- "LOGLEVEL=DEBUG"
-      - GRAPHITE_HOST=graphite
+      - LOGLEVEL
+      - GRAPHITE_HOST=${CONTAINER_PREFIX}graphite
       - NETATMO_CLIENT_PASSWORD
       - NETATMO_CLIENT_USERNAME
       - NETATMO_CLIENT_SECRET
       - NETATMO_CLIENT_ID
-      - DAEMON_DELAY_SECONDS=300
-      - DAEMON_DEFAULT_TIMESTAMP=1635368400
-      - DAEMON_PROCESS_ADD_ON_IGNORE_SECOUNDS=86400
-      - DAEMON_PROCESS_MAX_MISSING_SECOUNDS=1000000
+      - DAEMON_DELAY_SECONDS
+      - DAEMON_DEFAULT_TIMESTAMP
+      - DAEMON_PROCESS_ADD_ON_IGNORE_SECOUNDS
+      - DAEMON_PROCESS_MAX_MISSING_SECOUNDS
     image: sbrunner/netatmo2graphite:latest
     volumes:
       - ${CONFIGURATION_FOLDER}/netatmo2graphite/config:/etc/netatmo2graphite
