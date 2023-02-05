@@ -20,8 +20,6 @@ services:
     environment:
       - "TZ"
       - "COMPOSE_PROJECT_NAME"
-      - TEST1
-      - TEST2
     volumes:
       - "/volume1/data:/ds/data"
       - "/volume1/homes:/ds/homes"
