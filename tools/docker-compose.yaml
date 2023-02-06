@@ -28,6 +28,8 @@ services:
       - /volume1/logs:/volume1/logs
       - /volume1/paperless:/volume1/paperless
       - ${CONFIGURATION_FOLDER}/ubuntu/crontab:/etc/crontab
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /volume1/docker:/volume1/docker
     working_dir: /ds
     restart: unless-stopped
   watchtower:
