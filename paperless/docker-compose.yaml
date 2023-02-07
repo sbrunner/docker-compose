@@ -114,7 +114,7 @@ services:
       - OMP_DEBUG
       - OMP_ALLOCATOR
     ports:
-      - ${PAPERLESS_PORT}:8000/tcp
+      - ${PAPERLESS_PORT}:${PAPERLESS_INTERNAL_PORT}/tcp
     volumes:
       - ${PAPERLESS_FOLDER}/media:/usr/src/paperless/media2
       - ${PAPERLESS_FOLDER}/consume:/consume
