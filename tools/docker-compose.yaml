@@ -18,8 +18,12 @@ services:
       - -c
       - cron -f && tail -f /dev/null
     environment:
-      - TZ
       - COMPOSE_PROJECT_NAME
+      - TZ
+      - SHELL
+      - CRON_TZ
+      - MAILTO
+      - RANDOM_DELAY
     volumes:
       - /volume1/data:/volume1/data
       - /volume1/homes:/volume1/homes
