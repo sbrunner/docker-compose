@@ -135,9 +135,9 @@ services:
       - -c
       - work_mem=16MB
     environment:
-      - POSTGRES_DB=paperless
-      - POSTGRES_USER=paperless
-      - POSTGRES_PASSWORD=1234
+      - POSTGRES_DB
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
     volumes:
       - ${BACKUP_FOLDER}/pgdata:/var/lib/postgresql/data
     restart: unless-stopped
