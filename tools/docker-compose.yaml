@@ -16,7 +16,7 @@ services:
     command:
       - bash
       - -c
-      - cron && tail -f /dev/null
+      - cron -f && tail -f /dev/null
     environment:
       - TZ
       - COMPOSE_PROJECT_NAME
