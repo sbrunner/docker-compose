@@ -23,6 +23,7 @@ services:
       - SHELL
       - CRON_TZ
       - MAILTO
+      - MAILFROM
       - RANDOM_DELAY
     volumes:
       - /volume1/data:/volume1/data
