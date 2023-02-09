@@ -3,7 +3,7 @@ services:
   docker-autocompose:
     container_name: ${CONTAINER_PREFIX}docker-autocompose
     image: ghcr.io/red5d/docker-autocompose:latest
-    command:
+    entrypoint:
       - tail
       - -f
       - /dev/null
