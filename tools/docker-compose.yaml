@@ -2,7 +2,7 @@ version: '3.6'
 services:
   docker-autocompose:
     extends:
-      file: ./docker-compose-lib.yaml
+      file: docker-compose-lib.yaml
       service: docker-autocompose
   ubuntu: &ubuntu
     container_name: ${CONTAINER_PREFIX}ubuntu
@@ -39,5 +39,5 @@ services:
       - -f
   watchtower:
     extends:
-      file: ./docker-compose-lib.yaml
+      file: docker-compose-lib.yaml
       service: watchtower

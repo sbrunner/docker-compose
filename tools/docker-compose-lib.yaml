@@ -1,0 +1,49 @@
+version: '3.6'
+services:
+  docker-autocompose:
+    container_name: ${CONTAINER_PREFIX}docker-autocompose
+    image: ghcr.io/red5d/docker-autocompose:latest
+    entrypoint:
+      - tail
+      - -f
+      - /dev/null
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+  watchtower:
+    container_name: ${CONTAINER_PREFIX}watchtower
+    image: containrrr/watchtower
+    command:
+      - --run-once
+    environment:
+      - TZ
+      - WATCHTOWER_CLEANUP
+      - WATCHTOWER_REMOVE_VOLUMES
+      - WATCHTOWER_DEBUG
+      - WATCHTOWER_TRACE
+      - WATCHTOWER_LOG_LEVEL
+      - NO_COLOR
+      - DOCKER_HOST
+      - DOCKER_API_VERSION
+      - WATCHTOWER_INCLUDE_RESTARTING
+      - WATCHTOWER_INCLUDE_STOPPED
+      - WATCHTOWER_REVIVE_STOPPED
+      - WATCHTOWER_POLL_INTERVAL
+      - WATCHTOWER_LABEL_ENABLE
+      - WATCHTOWER_MONITOR_ONLY
+      - WATCHTOWER_NO_RESTART
+      - WATCHTOWER_NO_PULL
+      - WATCHTOWER_NO_STARTUP_MESSAGE
+      - WATCHTOWER_RUN_ONCE
+      - WATCHTOWER_HTTP_API_UPDATE
+      - WATCHTOWER_HTTP_API_TOKEN
+      - WATCHTOWER_HTTP_API_PERIODIC_POLLS
+      - WATCHTOWER_SCOPE
+      - WATCHTOWER_HTTP_API_METRICS
+      - WATCHTOWER_SCHEDULE
+      - WATCHTOWER_ROLLING_RESTART
+      - WATCHTOWER_TIMEOUT
+      - DOCKER_TLS_VERIFY
+      - WATCHTOWER_WARN_ON_HEAD_FAILURE
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
