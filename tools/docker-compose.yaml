@@ -39,6 +39,7 @@ services:
     restart: unless-stopped
   cron:
     <<: *ubuntu
+    container_name: ${CONTAINER_PREFIX}cron
     command:
       - bash
       - -c
