@@ -35,7 +35,7 @@ services:
       - ${CONFIGURATION_FOLDER}/ubuntu/cron.d:/etc/cron.d
       - /var/run/docker.sock:/var/run/docker.sock
       - /volume1/docker:/volume1/docker
-    working_dir: /ds
+    working_dir: /volume1
     restart: unless-stopped
   watchtower:
     container_name: ${CONTAINER_PREFIX}watchtower
