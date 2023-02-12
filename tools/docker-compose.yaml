@@ -10,13 +10,13 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
-  ubuntu:
+  ubuntu: &ubuntu
     container_name: ${CONTAINER_PREFIX}ubuntu
     image: sbrunner/vim:latest
     command:
-      - bash
-      - -c
-      - cron -f && tail -f /dev/null
+      - tail
+      - -f
+      - /dev/null
     environment:
       - COMPOSE_PROJECT_NAME
       - TZ
@@ -37,6 +37,12 @@ services:
       - /volume1/docker:/volume1/docker
     working_dir: /volume1
     restart: unless-stopped
+  cron:
+    <<: *ubuntu
+    command:
+      - bash
+      - -c
+      - cron -f && tail -f /dev/null
   watchtower:
     container_name: ${CONTAINER_PREFIX}watchtower
     image: containrrr/watchtower
