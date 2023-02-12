@@ -41,9 +41,8 @@ services:
     <<: *ubuntu
     container_name: ${CONTAINER_PREFIX}cron
     command:
-      - bash
-      - -c
-      - cron -f && tail -f /dev/null
+      - cron
+      - -f
   watchtower:
     container_name: ${CONTAINER_PREFIX}watchtower
     image: containrrr/watchtower
