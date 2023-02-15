@@ -25,6 +25,7 @@ services:
       - MAILTO
       - MAILFROM
       - RANDOM_DELAY
+      - A=B
     volumes:
       - /volume1/data:/volume1/data
       - /volume1/homes:/volume1/homes
