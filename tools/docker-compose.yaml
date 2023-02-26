@@ -25,7 +25,7 @@ services:
       - MAILTO
       - MAILFROM
       - RANDOM_DELAY
-      - A=B
+      - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/volume1/data/sync/bin
     volumes:
       - /volume1/data:/volume1/data
       - /volume1/homes:/volume1/homes

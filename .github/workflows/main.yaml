@@ -20,11 +20,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - run: docker --help
-      - run: docker --version
-      - run: docker version
-      - run: docker system info
-
       - run: pip install pre-commit
       - uses: actions/cache@v3
         with:
