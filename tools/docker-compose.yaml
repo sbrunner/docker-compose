@@ -37,6 +37,7 @@ services:
       - ${CONFIGURATION_FOLDER}/ubuntu/cron.d:/etc/cron.d
       - /var/run/docker.sock:/var/run/docker.sock
       - /volume1/docker:/volume1/docker
+      - /volume1/Backup:/volume1/Backup
     working_dir: /volume1
     restart: unless-stopped
   cron:
