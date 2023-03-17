@@ -1,6 +1,8 @@
 ci:
   skip:
     - copyright
+    - ripsecrets
+  autoupdate_schedule: quarterly
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.4.0
@@ -48,7 +50,21 @@ repos:
       - id: check-renovate
         additional_dependencies:
           - pyjson5==1.6.2 # pypi
+      - id: check-github-actions
+      - id: check-jsonschema
+        name: Check GitHub Workflows set timeout-minutes
+        files: ^\.github/workflows/[^/]+$
+        types:
+          - yaml
+        args:
+          - --builtin-schema
+          - github-workflows-require-timeout
   - repo: https://github.com/sirwart/ripsecrets
     rev: v0.1.5
     hooks:
       - id: ripsecrets
+  - repo: https://github.com/sbrunner/hooks
+    rev: 0.3.2
+    hooks:
+      - id: copyright
+      - id: workflows-require-timeout
