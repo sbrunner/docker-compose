@@ -2,6 +2,7 @@ ci:
   skip:
     - copyright
     - ripsecrets
+    - jsonschema-validator
   autoupdate_schedule: quarterly
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -68,3 +69,11 @@ repos:
     hooks:
       - id: copyright
       - id: workflows-require-timeout
+  - repo: https://github.com/sbrunner/jsonschema-validator
+    rev: 0.1.0
+    hooks:
+      - id: jsonschema-validator
+        files: |-
+          (?x)^(
+              ci/config\.yaml
+          )$
