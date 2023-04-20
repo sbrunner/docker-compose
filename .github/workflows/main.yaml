@@ -29,3 +29,5 @@ jobs:
       - run: pre-commit run --all-files
       - run: git diff && false
         if: failure()
+env:
+  HAS_SECRETS: ${{ secrets.HAS_SECRETS }}
