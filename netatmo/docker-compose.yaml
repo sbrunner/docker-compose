@@ -2,7 +2,7 @@ version: '3.6'
 services:
   graphite:
     container_name: ${CONTAINER_PREFIX}graphite
-    image: sitespeedio/graphite:latest
+    image: sitespeedio/graphite:1.1.10-3
     ports:
       - ${GRAPHITE_PORT}:2003/tcp
       - ${GRAPHITE_HTTP_PORT}:80/tcp
@@ -13,18 +13,18 @@ services:
       - ${CONFIGURATION_FOLDER}/graphite/log:/var/log
       - ${CONFIGURATION_FOLDER}/graphite/config:/opt/graphite/conf
     restart: unless-stopped
-  netatmo-exporter:
-    container_name: ${CONTAINER_PREFIX}netatmo-exporter
-    environment:
-      - NETATMO_EXPORTER_ADDR=${CONTAINER_PREFIX}netatmo-exporter:9210
-      - NETATMO_CLIENT_PASSWORD
-      - NETATMO_CLIENT_USERNAME
-      - NETATMO_CLIENT_SECRET
-      - NETATMO_CLIENT_ID
-    image: xperimental/netatmo-exporter:latest
-    ports:
-      - ${NETATMO_EXPORTER_PORT}:9210/tcp
-    restart: unless-stopped
+  # netatmo-exporter:
+  #   container_name: ${CONTAINER_PREFIX}netatmo-exporter
+  #   environment:
+  #     - NETATMO_EXPORTER_ADDR=${CONTAINER_PREFIX}netatmo-exporter:9210
+  #     - NETATMO_CLIENT_PASSWORD
+  #     - NETATMO_CLIENT_USERNAME
+  #     - NETATMO_CLIENT_SECRET
+  #     - NETATMO_CLIENT_ID
+  #   image: xperimental/netatmo-exporter:latest
+  #   ports:
+  #     - ${NETATMO_EXPORTER_PORT}:9210/tcp
+  #   restart: unless-stopped
   netatmo2graphite:
     container_name: ${CONTAINER_PREFIX}netatmo2graphite
     environment:
