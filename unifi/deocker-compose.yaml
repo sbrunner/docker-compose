@@ -1,0 +1,24 @@
+version: '3.6'
+services:
+  unifi-controller:
+    container_name: ${CONTAINER_PREFIX}unifi-controller
+    image: linuxserver/unifi-controller:7.4.162
+    environment:
+      - PUID
+      - PGID
+      - TZ
+      - MEM_LIMIT
+      - MEM_STARTUP
+    volumes:
+      - ${CONFIG_DIR}:/config
+    ports:
+      - ${PORT_8443}:8443
+      - ${PORT_3478}:3478/udp
+      - ${PORT_10001}:10001/udp
+      - ${PORT_8080}:8080
+      - ${PORT_1900}:1900/udp # optional
+      - ${PORT_8843}:8843 # optional
+      - ${PORT_8880}:8880 # optional
+      - ${PORT_6789}:6789 # optional
+      - ${PORT_5514}:5514/udp # optional
+    restart: unless-stopped
