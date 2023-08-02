@@ -31,6 +31,8 @@ repos:
     rev: v3.0.0
     hooks:
       - id: prettier
+        exclude: |-
+          ^.*/\.env$
         additional_dependencies:
           - prettier@2.8.8 # npm
           - prettier-plugin-sh@0.13.1 # npm
