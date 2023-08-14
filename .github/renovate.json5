@@ -56,5 +56,9 @@
       matchUpdateTypes: ['minor'],
       groupName: 'all minor versions',
     },
+    {
+      matchPackageNames: ['shellcheck-py/shellcheck-py'],
+      versioning: 'regex:^v(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)\\.(?<build>\\d+)$',
+    },
   ],
 }
