@@ -2,7 +2,7 @@ version: '3.6'
 services:
   unifi-controller:
     container_name: ${CONTAINER_PREFIX}unifi-controller
-    image: linuxserver/unifi-controller:7.5.176
+    image: linuxserver/unifi-controller:7.5.187
     environment:
       - PUID
       - PGID
