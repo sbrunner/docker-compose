@@ -76,5 +76,10 @@
       groupName: 'all minor versions',
       automerge: true,
     },
+    /** Auto merge the GitHub action and pre-commit updates */
+    {
+      matchDatasources: ['github-actions', 'pre-commit'],
+      automerge: true,
+    },
   ],
 }
