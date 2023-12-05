@@ -48,7 +48,7 @@ services:
       - -f
   watchtower:
     container_name: ${CONTAINER_PREFIX}watchtower
-    image: containrrr/watchtower:1.6.0
+    image: containrrr/watchtower:1.7.1
     command:
       - --run-once
     environment:
