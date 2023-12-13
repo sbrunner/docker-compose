@@ -29,15 +29,15 @@ services:
     volumes:
       - /volume1/data:/volume1/data
       - /volume1/homes:/volume1/homes
-      - ${CONFIGURATION_FOLDER}/ubuntu/root:/root
-      - ${CONFIGURATION_FOLDER}/ubuntu/logs:/logs
       - /volume1/logs:/volume1/logs
       - /volume1/paperless:/volume1/paperless
+      - /volume1/docker:/volume1/docker
+      - /volume1/Backup:/volume1/Backup
+      - ${CONFIGURATION_FOLDER}/ubuntu/root:/root
+      - ${CONFIGURATION_FOLDER}/ubuntu/logs:/logs
       - ${CONFIGURATION_FOLDER}/ubuntu/config/crontab:/etc/crontab
       - ${CONFIGURATION_FOLDER}/ubuntu/cron.d:/etc/cron.d
       - /var/run/docker.sock:/var/run/docker.sock
-      - /volume1/docker:/volume1/docker
-      - /volume1/Backup:/volume1/Backup
     working_dir: /volume1
     restart: unless-stopped
   cron:
