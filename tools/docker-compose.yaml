@@ -46,6 +46,8 @@ services:
     command:
       - cron
       - -f
+      - -L
+      - '8'
   watchtower:
     container_name: ${CONTAINER_PREFIX}watchtower
     image: containrrr/watchtower:1.7.1
