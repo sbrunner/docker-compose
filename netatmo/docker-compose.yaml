@@ -44,4 +44,5 @@ services:
     image: sbrunner/netatmo2graphite:latest
     volumes:
       - ${CONFIGURATION_FOLDER}/netatmo2graphite/config:/etc/netatmo2graphite
+      - ${CONFIGURATION_FOLDER}/netatmo2graphite/root:/root
     restart: unless-stopped
