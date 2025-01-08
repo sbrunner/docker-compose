@@ -1,4 +1,3 @@
-version: '3.6'
 services:
   whats-up:
     container_name: ${CONTAINER_PREFIX}whats-up

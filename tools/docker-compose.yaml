@@ -1,4 +1,3 @@
-version: '3.6'
 services:
   docker-autocompose:
     container_name: ${CONTAINER_PREFIX}docker-autocompose
