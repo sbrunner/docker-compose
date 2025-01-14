@@ -36,18 +36,18 @@ services:
       - ${CONFIGURATION_FOLDER}/grafana/data:/var/lib/grafana
       - ${CONFIGURATION_FOLDER}/grafana/dashboards:/etc/grafana/provisioning/dashboards
     restart: unless-stopped
-  loki:
-    container_name: ${CONTAINER_PREFIX}loki
-    image: grafana/loki:latest
-    command:
-      - -config.file=/etc/loki/config.yaml
-    ports:
-      - ${LOKI_PORT}:3100/tcp
-    volumes:
-      - ${CONFIGURATION_FOLDER}/loki/wal:/wal
-      - ${CONFIGURATION_FOLDER}/loki/config:/etc/loki:ro
-      - ${CONFIGURATION_FOLDER}/loki/data:/loki/chunks
-    restart: unless-stopped
+  #loki:
+  #  container_name: ${CONTAINER_PREFIX}loki
+  #  image: grafana/loki:latest
+  #  command:
+  #    - -config.file=/etc/loki/config.yaml
+  #  ports:
+  #    - ${LOKI_PORT}:3100/tcp
+  #  volumes:
+  #    - ${CONFIGURATION_FOLDER}/loki/wal:/wal
+  #    - ${CONFIGURATION_FOLDER}/loki/config:/etc/loki:ro
+  #    - ${CONFIGURATION_FOLDER}/loki/data:/loki/chunks
+  #  restart: unless-stopped
   node-exporter:
     container_name: ${CONTAINER_PREFIX}node-exporter
     image: prom/node-exporter:latest
