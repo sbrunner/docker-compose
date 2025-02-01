@@ -5,6 +5,7 @@ services:
     environment:
       - PROGRESS
       - EXPERIMENTAL
+      - DEBUG_INOTIFY
     volumes:
       - ${PAPERLESS_FOLDER}/scan-codes:/scan-codes
       - ${PAPERLESS_FOLDER}/scan:/source
