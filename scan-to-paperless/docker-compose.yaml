@@ -6,6 +6,7 @@ services:
       - PROGRESS
       - EXPERIMENTAL
       - DEBUG_INOTIFY
+      - WATCH_DOG
     volumes:
       - ${PAPERLESS_FOLDER}/scan-codes:/scan-codes
       - ${PAPERLESS_FOLDER}/scan:/source
