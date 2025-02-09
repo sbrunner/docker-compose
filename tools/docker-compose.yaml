@@ -11,7 +11,7 @@ services:
     restart: unless-stopped
   ubuntu: &ubuntu
     container_name: ${CONTAINER_PREFIX}ubuntu
-    image: sbrunner/vim:latest
+    image: ghcr.io/sbrunner/vim:latest
     command:
       - tail
       - -f

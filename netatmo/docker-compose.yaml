@@ -40,7 +40,7 @@ services:
       - DAEMON_DEFAULT_TIMESTAMP
       - DAEMON_PROCESS_ADD_ON_IGNORE_SECOUNDS
       - DAEMON_PROCESS_MAX_MISSING_SECOUNDS
-    image: sbrunner/netatmo2graphite:latest
+    image: ghcr.io/sbrunner/netatmo2graphite:latest
     volumes:
       - ${CONFIGURATION_FOLDER}/netatmo2graphite/config:/etc/netatmo2graphite
       - ${CONFIGURATION_FOLDER}/netatmo2graphite/root:/root
