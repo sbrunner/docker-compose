@@ -5,6 +5,8 @@ services:
     environment:
       - PROGRESS
       - EXPERIMENTAL
+      - CODE_COLOR_BACKGROUND
+      - CODE_COLOR_FOREGROUND
       - DEBUG_INOTIFY
       - WATCH_DOG
       - SENTRY_DSN
