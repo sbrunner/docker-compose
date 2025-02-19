@@ -7,6 +7,7 @@ services:
       - EXPERIMENTAL
       - DEBUG_INOTIFY
       - WATCH_DOG
+      - SENTRY_DSN
     volumes:
       - ${PAPERLESS_FOLDER}/scan-codes:/scan-codes
       - ${PAPERLESS_FOLDER}/scan:/source
