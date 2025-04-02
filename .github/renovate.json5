@@ -35,4 +35,5 @@
       groupName: 'all minor versions',
     },
   ],
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
 }
