@@ -8,8 +8,8 @@
     'github>camptocamp/gs-renovate-config-preset:json-schema.json5#1.1.2',
     'github>camptocamp/gs-renovate-config-preset:shellcheck.json5#1.1.2',
     'github>camptocamp/gs-renovate-config-preset:preset.json5#1.1.2',
-    'github>camptocamp/gs-renovate-config-preset:security.json5#1.1.2',
     'github>camptocamp/gs-renovate-config-preset:own.json5#1.1.2',
+    'github>camptocamp/gs-renovate-config-preset:security.json5#1.1.2',
   ],
   customManagers: [
     {
@@ -20,16 +20,6 @@
     },
   ],
   packageRules: [
-    /** Automerge the patch, the minor and the dev dependency */
-    {
-      matchUpdateTypes: ['minor', 'patch'],
-      automerge: true,
-    },
-    /** Group the patch and the minor */
-    {
-      matchUpdateTypes: ['patch'],
-      groupName: 'all patch versions',
-    },
     {
       matchUpdateTypes: ['minor'],
       groupName: 'all minor versions',
