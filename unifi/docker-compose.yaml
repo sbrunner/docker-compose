@@ -1,7 +1,7 @@
 services:
   unifi-controller:
     container_name: ${CONTAINER_PREFIX}unifi-controller
-    image: linuxserver/unifi-controller:8.0.24
+    image: linuxserver/unifi-network-application:10.0.162
     environment:
       - PUID
       - PGID
