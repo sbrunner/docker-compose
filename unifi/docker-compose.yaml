@@ -11,7 +11,7 @@ services:
       - MONGO_AUTHSOURCE
     volumes:
       - ${CONFIG_DIR}/mongodb/data:/data/db
-      - ./init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh:ro
+      - ${CONFIG_DIR}/mongodb/init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh:ro
     restart: unless-stopped
 
   unifi-network-application:
