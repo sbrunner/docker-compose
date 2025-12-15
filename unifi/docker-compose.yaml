@@ -31,7 +31,7 @@ services:
       - MEM_STARTUP
       - MONGO_TLS
     volumes:
-      - ${CONFIG_DIR}/unifi-network-application/data:/config
+      - ${CONFIG_DIR}/unifi-network-application:/config
     ports:
       - ${PORT_8443}:8443
       - ${PORT_3478}:3478/udp
