@@ -1,6 +1,6 @@
 services:
   unifi-db:
-    image: docker.io/mongo:4.4.28
+    image: docker.io/mongo:8.2.2
     container_name: ${CONTAINER_PREFIX}unifi-db
     environment:
       - MONGO_INITDB_ROOT_USERNAME
