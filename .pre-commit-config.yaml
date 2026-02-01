@@ -28,7 +28,7 @@ repos:
         exclude: |-
           ^.*/\.env$
         additional_dependencies:
-          - prettier@3.7.4 # npm
+          - prettier@3.8.1 # npm
           - prettier-plugin-sh@0.18.0 # npm
           - prettier-plugin-toml@2.0.6 # npm
           - '@prettier/plugin-xml@0.12.0' # npm
@@ -73,6 +73,6 @@ repos:
             |\.github/publish\.yaml
           )$
   - repo: https://github.com/renovatebot/pre-commit-hooks
-    rev: 42.81.1
+    rev: 42.95.1
     hooks:
       - id: renovate-config-validator
