@@ -10,6 +10,7 @@ services:
       - DEBUG_INOTIFY
       - WATCH_DOG
       - SENTRY_DSN
+      - HF_TOKEN
     volumes:
       - ${PAPERLESS_FOLDER}/scan-codes:/scan-codes
       - ${PAPERLESS_FOLDER}/scan:/source
